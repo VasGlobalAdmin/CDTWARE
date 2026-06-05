@@ -1,0 +1,20 @@
+node_modules
+.next
+out
+build
+.env*
+*.log
+.DS_Store
+
+# figma working files
+figma_tree.json
+figma_nodes.json
+figma_fills.json
+figma_images.json
+asset_manifest.json
+design_text.txt
+dl_list.txt
+render.js
+assets_raw/
+assets_render/
+figma_ref/

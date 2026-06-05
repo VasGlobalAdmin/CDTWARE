@@ -1,0 +1,96 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        cream: "#FAF8F2",
+        ink: "#0A0A08",
+        "ink-2": "#100F0A",
+        "ink-3": "#090907",
+        "muted": "#E9E6E6",
+        "muted-2": "#AEADAD",
+        brand: "#E5332A",
+        "brand-dark": "#C1271F",
+      },
+      fontFamily: {
+        // Gotham substitute -> Montserrat (geometric grotesque)
+        gotham: ["var(--font-montserrat)", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
+        playfair: ["var(--font-playfair)", "serif"],
+        bebas: ["var(--font-bebas)", "sans-serif"],
+        dm: ["var(--font-dmsans)", "sans-serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
+      },
+      maxWidth: {
+        site: "1440px",
+      },
+      keyframes: {
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(24px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        float: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        // Page-load entrance: slide horizontally into place
+        slideInLeft: {
+          "0%": { opacity: "0", transform: "translateX(-64px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        slideInRight: {
+          "0%": { opacity: "0", transform: "translateX(64px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        riseIn: {
+          "0%": { opacity: "0", transform: "translateY(36px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        zoomIn: {
+          "0%": { opacity: "0", transform: "scale(0.86)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        // Header text: each line rises out from behind a clip mask
+        textReveal: {
+          "0%": { opacity: "0", transform: "translateY(110%)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        // Slow continuous rotation for the circular backdrop ring
+        spinSlow: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        spinReverse: {
+          "0%": { transform: "rotate(360deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
+        // Wispy cigarette smoke: a puff rises and drifts LEFT (into the dark
+        // background, away from the lion's face), growing and fading.
+        smoke: {
+          "0%": { transform: "translateY(0) translateX(0) scale(0.35)", opacity: "0" },
+          "6%": { opacity: "0.5" },
+          "45%": { transform: "translateY(-44px) translateX(-16px) scale(0.95)", opacity: "0.35" },
+          "75%": { transform: "translateY(-86px) translateX(-30px) scale(1.5)", opacity: "0.15" },
+          "100%": { transform: "translateY(-126px) translateX(-42px) scale(2.1)", opacity: "0" },
+        },
+      },
+      animation: {
+        fadeUp: "fadeUp 0.7s ease-out both",
+        float: "float 6s ease-in-out infinite",
+        slideInLeft: "slideInLeft 0.9s cubic-bezier(0.22,1,0.36,1) both",
+        slideInRight: "slideInRight 0.9s cubic-bezier(0.22,1,0.36,1) both",
+        riseIn: "riseIn 0.8s cubic-bezier(0.22,1,0.36,1) both",
+        zoomIn: "zoomIn 0.9s cubic-bezier(0.22,1,0.36,1) both",
+        textReveal: "textReveal 0.9s cubic-bezier(0.22,1,0.36,1) both",
+        spinSlow: "spinSlow 32s linear infinite",
+        spinReverse: "spinReverse 26s linear infinite",
+        smoke: "smoke 3.8s ease-out infinite",
+      },
+    },
+  },
+  plugins: [],
+};

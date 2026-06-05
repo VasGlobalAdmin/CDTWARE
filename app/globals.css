@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #090907;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-poppins), sans-serif;
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0b08;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2820;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a382d;
+}
+
+/* Hide scrollbar utility for horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-[99px];
+  }
+  .eyebrow {
+    @apply font-dm text-[10px] font-bold uppercase tracking-[0.3em] text-white/80;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply mr-3 inline-block h-px w-7 align-middle bg-white/50;
+  }
+  .h-display {
+    @apply font-gotham font-black leading-none text-cream;
+  }
+  .h-serif {
+    @apply font-playfair font-bold italic leading-none text-white;
+  }
+}
+
+/* Reveal on scroll — progressive enhancement.
+   Visible by default (no-JS / SSR). Hidden only once JS marks <html class="js">. */
+.reveal {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+/* Default (up) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+/* Directional variants — set via the `from` prop on <Reveal> */
+.js .reveal[data-from="left"] {
+  transform: translateX(-56px);
+}
+.js .reveal[data-from="right"] {
+  transform: translateX(56px);
+}
+.js .reveal[data-from="zoom"] {
+  transform: scale(0.9);
+}
+.js .reveal.in {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+/* Header text: clip-mask line reveal. Wrap each line in .line-mask and the
+   text in .line-text; on load the text slides up out from behind the mask. */
+.line-mask {
+  overflow: hidden;
+  display: block;
+}
+
+/* ── Contact section: infinite skyline + driving traffic + helicopter ── */
+@keyframes marqueeX {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+/* world scrolls left ⇒ the centred hero truck reads as driving right.
+   Oncoming (near) traffic runs right→left fast; same-direction (far) lane
+   overtakes the scrolling ground slowly left→right. */
+@keyframes driveLeft {
+  from { transform: translate3d(124vw, 0, 0); }
+  to { transform: translate3d(-28vw, 0, 0); }
+}
+@keyframes driveRight {
+  from { transform: translate3d(-28vw, 0, 0); }
+  to { transform: translate3d(124vw, 0, 0); }
+}
+@keyframes spin360 {
+  to { transform: rotate(360deg); }
+}
+/* dashed centre line streaming past — sells forward motion */
+@keyframes roadDash {
+  from { background-position: 0 0; }
+  to { background-position: -108px 0; }
+}
+/* helicopter cruising: rise/fall with a gentle bank suggesting heading */
+@keyframes heliCruise {
+  0%, 100% { transform: translateY(0) rotate(-1.6deg); }
+  50% { transform: translateY(-15px) rotate(1.6deg); }
+}
+/* slung payload swings on its cable like a pendulum */
+@keyframes qrSwing {
+  0%, 100% { transform: rotate(-4.5deg); }
+  50% { transform: rotate(4.5deg); }
+}
+/* main rotor seen from the side: blade tips foreshorten as it spins, so the
+   projected blade rapidly squashes/stretches horizontally */
+@keyframes rotorSpin {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(0.55); }
+}
+.heli-rotor {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: rotorSpin 0.13s linear infinite;
+}
+@keyframes heliVibrate {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(0.7px, -0.7px) rotate(0.3deg); }
+  40% { transform: translate(-0.7px, 0.5px) rotate(-0.3deg); }
+  60% { transform: translate(0.5px, 0.7px) rotate(0.18deg); }
+  80% { transform: translate(-0.5px, -0.5px) rotate(-0.18deg); }
+}
+/* suspension bounce: body bobs and pitches as if rolling over the road */
+@keyframes suspension {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(-0.5deg); }
+  50% { transform: translateY(0.4px) rotate(0.25deg); }
+  75% { transform: translateY(-1.4px) rotate(-0.3deg); }
+}
+/* tyre buzz: ONLY the truck's tyres jitter (engine/road vibration); the truck
+   body itself stays steady */
+@keyframes tyreVibrate {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(0.6px); }
+  50% { transform: translateY(-0.5px); }
+  75% { transform: translateY(0.4px); }
+}
+.tyre-vibrate {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tyreVibrate 0.12s linear infinite;
+}
+.spin-wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin360 0.55s linear infinite;
+}
+.spin-rotor {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin360 0.16s linear infinite;
+}
+
+/* Hero product photo — gentle 3D parallax so it reads as a real object, not a
+   flat picture. The parent supplies `perspective`; the slight over-scale keeps
+   the tilted edges inside the circular mask. */
+@keyframes slide3d {
+  0%, 100% { transform: scale(1.16) rotateY(-9deg) rotateX(3.5deg); }
+  50% { transform: scale(1.16) rotateY(9deg) rotateX(-3.5deg); }
+}
+.img-3d {
+  animation: slide3d 7s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .line-text {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .marquee-track,
+  .drive-lane,
+  .drive-lane *,
+  .road-dash,
+  .spin-wheel,
+  .spin-rotor,
+  .tyre-vibrate,
+  .heli-float,
+  .heli-vibrate,
+  .heli-rotor,
+  .qr-swing,
+  .img-3d {
+    animation: none !important;
+  }
+}
