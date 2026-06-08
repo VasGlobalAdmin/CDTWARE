@@ -70,9 +70,10 @@ function HeliPayload() {
     // Outer = gentle cruising flight (rise/fall + a subtle bank that suggests heading)
     <div className="heli-float" style={{ animation: "heliCruise 6s ease-in-out infinite", transformOrigin: "50% 0%" }}>
       <div className="heli-vibrate" style={{ animation: "heliVibrate 0.18s linear infinite" }}>
-        {/* nudge the chopper RIGHT so its body/skids sit over the centred QR
-            (the tail extends off to the right) — matches the reference */}
-        <div className="relative mx-auto w-[212px] max-w-[56vw]" style={{ transform: "translateX(15%)" }}>
+        {/* Flipped horizontally so the nose faces RIGHT — same heading as the CDT
+            truck below. scaleX(-1) mirrors it; translateX(-15%) re-centres the
+            body/skids over the centred QR (the tail now extends off to the left). */}
+        <div className="relative mx-auto w-[212px] max-w-[56vw]" style={{ transform: "translateX(-15%) scaleX(-1)" }}>
           <Helicopter />
         </div>
         {/* Swinging payload — cables + QR pivot from the hook like a pendulum */}
@@ -395,13 +396,13 @@ const ONCOMING = [
 export default function Contact() {
   return (
     <section id="contact" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink-3 pt-16 lg:h-[100svh] lg:pt-20">
-      {/* ── Figma "Group 10" glow — centered ── */}
-      <Glow side="center" rotate={270} />
-      {/* one continuous ambient wash centred low on the skyline — fades smoothly up
-          into the helicopter area so the city reads as the SAME scene (no seam) */}
+      {/* ── Figma "Group 10" glow — biased to the top-centre ── */}
+      <Glow side="center" rotate={270} place="left-1/2 top-[0%] -translate-x-1/2 -translate-y-1/2 w-[clamp(720px,72vw,1500px)]" />
+      {/* one continuous ambient wash centred high (top) so the warm glow sits behind
+          the heading/helicopter and fades down toward the skyline */}
       <div
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(130% 80% at 50% 90%, rgba(152,122,52,0.22) 0%, rgba(22,44,86,0.14) 44%, transparent 78%)" }}
+        style={{ background: "radial-gradient(130% 80% at 50% 16%, rgba(152,122,52,0.22) 0%, rgba(22,44,86,0.14) 44%, transparent 78%)" }}
       />
 
       {/* heading + contact info */}
@@ -451,10 +452,10 @@ export default function Contact() {
         <div className="relative h-[max(210px,min(44vw,44vh,540px))] w-full overflow-hidden">
           {/* zoomed skyline marquee — max-w-none keeps the image at true scale */}
           <div className="marquee-track absolute bottom-0 left-0 flex h-full" style={{ animation: "marqueeX 120s linear infinite" }}>
-            <img src="/images/contact-map.png" alt="" className="h-full w-auto max-w-none shrink-0" />
-            <img src="/images/contact-map.png" alt="" className="h-full w-auto max-w-none shrink-0 -scale-x-100" />
-            <img src="/images/contact-map.png" alt="" className="h-full w-auto max-w-none shrink-0" />
-            <img src="/images/contact-map.png" alt="" className="h-full w-auto max-w-none shrink-0 -scale-x-100" />
+            <img src="/images/Contact%20Background.png" alt="" className="h-full w-auto max-w-none shrink-0" />
+            <img src="/images/Contact%20Background.png" alt="" className="h-full w-auto max-w-none shrink-0 -scale-x-100" />
+            <img src="/images/Contact%20Background.png" alt="" className="h-full w-auto max-w-none shrink-0" />
+            <img src="/images/Contact%20Background.png" alt="" className="h-full w-auto max-w-none shrink-0 -scale-x-100" />
           </div>
 
           {/* BACK lane (upper) — car, taxi & van run LEFT, set higher up and
