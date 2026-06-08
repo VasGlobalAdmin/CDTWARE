@@ -6,6 +6,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // Extra breakpoint for large monitors (1920px, 2560px QHD/4K) so the wide
+      // content sections can scale up and fill the screen instead of sitting
+      // boxed in the middle with huge side margins.
+      screens: {
+        "3xl": "1920px",
+      },
       colors: {
         cream: "#FAF8F2",
         ink: "#0A0A08",
@@ -17,13 +23,15 @@ module.exports = {
         "brand-dark": "#C1271F",
       },
       fontFamily: {
-        // Gotham substitute -> Montserrat (geometric grotesque)
-        gotham: ["var(--font-montserrat)", "sans-serif"],
-        poppins: ["var(--font-poppins)", "sans-serif"],
-        playfair: ["var(--font-playfair)", "serif"],
-        bebas: ["var(--font-bebas)", "sans-serif"],
-        dm: ["var(--font-dmsans)", "sans-serif"],
-        inter: ["var(--font-inter)", "sans-serif"],
+        // Real Gotham everywhere. Every token resolves to the same Gotham
+        // variable so no component (font-poppins, font-dm, font-playfair, …)
+        // can render a different typeface.
+        gotham: ["var(--font-gotham)", "sans-serif"],
+        poppins: ["var(--font-gotham)", "sans-serif"],
+        playfair: ["var(--font-gotham)", "sans-serif"],
+        bebas: ["var(--font-gotham)", "sans-serif"],
+        dm: ["var(--font-gotham)", "sans-serif"],
+        inter: ["var(--font-gotham)", "sans-serif"],
       },
       maxWidth: {
         site: "1440px",

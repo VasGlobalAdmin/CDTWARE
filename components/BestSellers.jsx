@@ -73,7 +73,7 @@ function TiltCard({ s, i }) {
         style={{ transform: "rotateX(0deg) rotateY(0deg)" }}
       >
         {/* Image — lifted toward the viewer for parallax depth */}
-        <div className="relative h-52 overflow-hidden sm:h-56" style={{ transform: "translateZ(45px)" }}>
+        <div className="relative h-52 overflow-hidden sm:h-56 lg:h-64 2xl:h-72 3xl:h-80" style={{ transform: "translateZ(45px)" }}>
           <img
             src={s.img}
             alt={s.name}
@@ -88,14 +88,14 @@ function TiltCard({ s, i }) {
         </div>
 
         {/* Copy — slightly lifted too */}
-        <div className="p-5" style={{ transform: "translateZ(28px)" }}>
-          <p className="font-dm text-[11px] font-bold uppercase tracking-[0.25em] text-white/55">
+        <div className="p-5 3xl:p-7" style={{ transform: "translateZ(28px)" }}>
+          <p className="font-dm text-[11px] font-bold uppercase tracking-[0.25em] text-white/55 3xl:text-xs">
             {s.tag}
           </p>
-          <h3 className="mt-1.5 font-gotham text-xl font-bold uppercase tracking-tight text-cream sm:text-2xl">
+          <h3 className="mt-1.5 font-gotham text-xl font-bold uppercase tracking-tight text-cream sm:text-2xl 3xl:text-[1.75rem]">
             {s.name}
           </h3>
-          <p className="mt-2 font-poppins text-sm font-light leading-relaxed text-muted/80">
+          <p className="mt-2 font-poppins text-sm font-light leading-relaxed text-muted/80 3xl:text-base">
             {s.desc}
           </p>
         </div>
@@ -111,20 +111,20 @@ export default function BestSellers({ panel = false }) {
   return (
     <section
       id="best-sellers"
-      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-16 lg:py-20 ${
+      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 ${
         panel ? "bg-transparent" : "bg-ink-2"
       }`}
     >
       {/* ── Figma "Group 10" glow — biased left. Shared/static when pinned. ── */}
       {!panel && <Glow side="left" rotate={180} />}
 
-      <div className="container-site relative">
+      <div className="container-wide relative">
         <Reveal from="left">
           <p className="eyebrow">Top Products</p>
           <SectionHeading top="Best" bottom="Sellers" />
         </Reveal>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid gap-6 2xl:gap-8 3xl:gap-10 sm:grid-cols-2 xl:grid-cols-4">
           {SELLERS.map((s, i) => (
             <TiltCard key={i} s={s} i={i} />
           ))}

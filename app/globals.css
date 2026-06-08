@@ -16,7 +16,7 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-gotham), sans-serif;
   background: var(--bg);
   overflow-x: hidden;
 }
@@ -49,6 +49,13 @@ body {
 @layer components {
   .container-site {
     @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-[99px];
+  }
+  /* Wider container for the big content sections (Categories, Best Sellers,
+     Why CDT, FAQ) so they scale up and fill large screens instead of sitting
+     boxed at 1440px with empty bands on the sides. Same padding rhythm as
+     container-site, just a larger ceiling + more breathing room past 2xl. */
+  .container-wide {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-[99px] 2xl:max-w-[1760px] 2xl:px-[110px] 3xl:max-w-[2400px] 3xl:px-[120px];
   }
   .eyebrow {
     @apply font-dm text-[10px] font-bold uppercase tracking-[0.3em] text-white/80;

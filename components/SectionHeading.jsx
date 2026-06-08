@@ -4,7 +4,7 @@
 // via clamp() — ~32px on phones, scaling up to the 60px Figma size on large
 // screens — so it stays responsive without per-section breakpoints drifting.
 const LINE =
-  "block font-gotham uppercase leading-none tracking-[0.05em] text-[clamp(2rem,6vw,3.75rem)]";
+  "block font-gotham uppercase leading-none tracking-[0.05em] text-[clamp(2rem,6vw,3.75rem)] 3xl:text-[4.5rem]";
 
 export default function SectionHeading({ top, bottom, className = "" }) {
   return (

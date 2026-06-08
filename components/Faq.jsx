@@ -66,15 +66,15 @@ const line = (isOpen, i = 0) => ({
 
 function Answer({ a, isOpen }) {
   return (
-    <div className="px-5 pb-6 pr-6 sm:px-6">
+    <div className="px-5 pb-6 pr-6 sm:px-6 3xl:px-8 3xl:pb-8">
       {a.intro &&
         (a.steps ? (
-          <p className="font-poppins text-[17px] font-semibold text-[#EFEFEB]" style={line(isOpen)}>
+          <p className="font-poppins text-[17px] font-semibold text-[#EFEFEB] 3xl:text-xl" style={line(isOpen)}>
             {a.intro}
           </p>
         ) : (
           <p
-            className="font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px]"
+            className="font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px] 3xl:text-lg"
             style={line(isOpen)}
           >
             {a.intro}
@@ -85,7 +85,7 @@ function Answer({ a, isOpen }) {
           {a.steps.map((s, i) => (
             <li
               key={i}
-              className="flex items-start gap-2.5 font-inter text-[15px] font-light text-[#EFEFEB]/90 sm:text-[17px]"
+              className="flex items-start gap-2.5 font-inter text-[15px] font-light text-[#EFEFEB]/90 sm:text-[17px] 3xl:text-lg"
               style={line(isOpen, i + 1)}
             >
               <Icon.check className="mt-1.5 h-3.5 w-3.5 flex-none text-brand" />
@@ -96,7 +96,7 @@ function Answer({ a, isOpen }) {
       )}
       {a.outro && (
         <p
-          className="mt-3 font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px]"
+          className="mt-3 font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px] 3xl:text-lg"
           style={line(isOpen, (a.steps?.length || 0) + 1)}
         >
           {a.outro}
@@ -112,7 +112,7 @@ export default function Faq({ panel = false }) {
   return (
     <section
       id="faq"
-      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-16 lg:py-20 ${
+      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 ${
         panel ? "bg-transparent" : "bg-[#080806]"
       }`}
     >
@@ -120,12 +120,12 @@ export default function Faq({ panel = false }) {
           (HScroll supplies one background for the Why-CDT + FAQ pair). ── */}
       {!panel && <Glow side="right" rotate={90} />}
 
-      <div className="container-site relative grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div className="container-wide relative grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 2xl:gap-24">
         {/* HEADING — left side on large screens, text aligned left */}
         <Reveal from="left" className="lg:order-1 lg:text-left">
           <p className="eyebrow">The CDT Difference</p>
           <SectionHeading top="FAQ's" bottom="Support" />
-          <p className="mt-5 max-w-sm font-poppins text-sm font-light leading-6 text-muted">
+          <p className="mt-5 max-w-sm font-poppins text-sm font-light leading-6 text-muted 3xl:max-w-md 3xl:text-base 3xl:leading-7">
             Great wholesale prices, delivery that doesn&apos;t ghost you, and a team that picks up
             on the first ring. Sounds too good? Come find out.
           </p>
@@ -146,23 +146,23 @@ export default function Faq({ panel = false }) {
                   <button
                     onClick={() => setOpen(isOpen ? -1 : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5 3xl:px-8 3xl:py-7"
                   >
                     <span
-                      className={`font-poppins text-[15px] font-medium transition-colors duration-300 sm:text-base ${
+                      className={`font-poppins text-[15px] font-medium transition-colors duration-300 sm:text-base 3xl:text-lg ${
                         isOpen ? "text-cream" : "text-[#EFEFEB]"
                       }`}
                     >
                       {item.q}
                     </span>
                     <span
-                      className={`flex h-8 w-8 flex-none items-center justify-center rounded-full border transition-all duration-300 ${
+                      className={`flex h-8 w-8 flex-none items-center justify-center rounded-full border transition-all duration-300 3xl:h-10 3xl:w-10 ${
                         isOpen
                           ? "rotate-45 border-brand bg-brand text-white"
                           : "border-white/15 text-cream"
                       }`}
                     >
-                      <Icon.plus className="h-4 w-4" />
+                      <Icon.plus className="h-4 w-4 3xl:h-5 3xl:w-5" />
                     </span>
                   </button>
                   <div

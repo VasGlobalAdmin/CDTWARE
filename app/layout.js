@@ -1,48 +1,23 @@
 import "./globals.css";
 import Preloader from "@/components/Preloader";
-import {
-  Montserrat,
-  Poppins,
-  Playfair_Display,
-  Bebas_Neue,
-  DM_Sans,
-  Inter,
-} from "next/font/google";
+import localFont from "next/font/local";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "800", "900"],
-  variable: "--font-montserrat",
-  display: "swap",
-});
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-});
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700", "800", "900"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-const bebas = Bebas_Neue({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-bebas",
-  display: "swap",
-});
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-dmsans",
-  display: "swap",
-});
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-inter",
+// Real Gotham (licensed .otf files in app/fonts). One variable drives every
+// text token in tailwind.config.js, so the whole site renders in Gotham.
+const gotham = localFont({
+  src: [
+    { path: "./fonts/Gotham-Light.otf", weight: "300", style: "normal" },
+    { path: "./fonts/Gotham-LightItalic.otf", weight: "300", style: "italic" },
+    { path: "./fonts/Gotham-Book.otf", weight: "400", style: "normal" },
+    { path: "./fonts/Gotham-BookItalic.otf", weight: "400", style: "italic" },
+    { path: "./fonts/Gotham-Medium.otf", weight: "500", style: "normal" },
+    { path: "./fonts/Gotham-MediumItalic.otf", weight: "500", style: "italic" },
+    { path: "./fonts/Gotham-Bold.otf", weight: "700", style: "normal" },
+    { path: "./fonts/Gotham-BoldItalic.otf", weight: "700", style: "italic" },
+    { path: "./fonts/Gotham-Black.otf", weight: "900", style: "normal" },
+    { path: "./fonts/Gotham-BlackItalic.otf", weight: "900", style: "italic" },
+  ],
+  variable: "--font-gotham",
   display: "swap",
 });
 
@@ -63,7 +38,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${montserrat.variable} ${poppins.variable} ${playfair.variable} ${bebas.variable} ${dmSans.variable} ${inter.variable} bg-ink-3 text-cream antialiased`}
+        className={`${gotham.variable} bg-ink-3 text-cream antialiased`}
       >
         <Preloader />
         {children}

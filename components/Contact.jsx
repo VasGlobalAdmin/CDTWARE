@@ -417,7 +417,7 @@ export default function Contact() {
           {INFO.map((it, i) => {
             const inner = (
               <span className="flex items-center gap-3 text-left">
-                <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand/15 text-brand">
+                <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#FFE0E0] text-brand">
                   <it.icon className="h-4 w-4" />
                 </span>
                 <span className="font-poppins text-[13px] leading-snug text-cream sm:text-sm">

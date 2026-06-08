@@ -15,22 +15,22 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 const PRODUCTS = [
   {
     tag: "Ciggrate", name: "Teton", rank: "#4 Most loved item",
-    titleLight: "URAP ASLI", titleBold: "Teton", rating: "4.9", likes: 46, img: "/images/seller-teton.png", thumb: "/images/teton-cluster.png",
+    titleLight: "URAP ASLI", titleBold: "TETON", rating: "4.9", likes: 46, img: "/images/seller-teton.png", thumb: "/images/teton-cluster.png",
     desc: "Great wholesale prices, delivery that doesn't ghost you, and a team that picks up on the first ring. Sounds too good? Come find out.",
   },
   {
     tag: "Scale", name: "Boost Plus", rank: "#2 Best mover this week",
-    titleLight: "POWER LINE", titleBold: "Boost+", rating: "4.8", likes: 61, img: "/images/about-scales.png", thumb: "/images/thumb-scale.png",
+    titleLight: "POWER LINE", titleBold: "BOOST+", rating: "4.8", likes: 61, img: "/images/about-scales.png", thumb: "/images/thumb-scale.png",
     desc: "Stocked fast, priced right — the line C-store owners reorder without thinking twice. Next business day across South Carolina.",
   },
   {
     tag: "Mobile Accessories", name: "Boost Plus", rank: "#7 Trending in accessories",
-    titleLight: "EVERYDAY", titleBold: "Boost+", rating: "4.7", likes: 38, img: "/images/about-buds.png", thumb: "/images/thumb-earbuds.png",
+    titleLight: "EVERYDAY", titleBold: "BOOST+", rating: "4.7", likes: 38, img: "/images/about-buds.png", thumb: "/images/thumb-earbuds.png",
     desc: "Cables, chargers and the impulse buys by the register. High margin, always in stock, one quick order away.",
   },
   {
     tag: "Cigarillos", name: "Raw Leaf", rank: "#1 Customer favorite",
-    titleLight: "PREMIUM", titleBold: "Raw Leaf", rating: "5.0", likes: 92, img: "/images/about-collage.png", thumb: "/images/thumb-rawleaf.png",
+    titleLight: "PREMIUM", titleBold: "RAW LEAF", rating: "5.0", likes: 92, img: "/images/about-collage.png", thumb: "/images/thumb-rawleaf.png",
     desc: "The shelf that sells itself. Premium leaf at wholesale prices, restocked before you ever run out.",
   },
 ];
@@ -351,7 +351,7 @@ export default function Hero() {
         <div style={{ position: "absolute", inset: 0, transform: `translateX(${view.push}px)` }}>
         {/* ---- Hanging lamp (Frame 328) @(1270,-106) 74×400 ----
             Real Figma export (Group.svg); LampSvg kept as a 404 fallback. */}
-        <div style={{ ...abs(1270, -106, 74, 400), zIndex: 30 }} className="animate-float">
+        <div style={{ ...abs(1270, -20, 74, 400), zIndex: 30 }} className="animate-float">
           <ImgFallback src="/images/hero-lamp.svg" imgClass="object-contain">
             <LampSvg />
           </ImgFallback>
@@ -368,7 +368,7 @@ export default function Hero() {
         >
           <div
             className="pointer-events-none absolute inset-0"
-            style={{ background: "radial-gradient(135% 78% at 60% -6%, rgba(255,214,138,0.36), rgba(255,198,108,0.10) 42%, transparent 70%)" }}
+            style={{ background: "radial-gradient(115% 62% at 68% 42%, rgba(255,214,138,0.42), rgba(255,198,108,0.13) 40%, transparent 66%)" }}
           />
         </motion.div>
         {/* ---- Rating — clean number + gold stars, no disc/ring ---- */}
@@ -381,19 +381,19 @@ export default function Hero() {
         >
           {p.rating}
         </Swap>
-        <motion.div {...rise(0.4)} style={abs(1131, 262, 220)} className="pointer-events-none">
+        <motion.div {...rise(0.4)} style={abs(1131, 250, 220)} className="pointer-events-none">
           <StarRow value={p.rating} size={20} gap={3} />
         </motion.div>
-        <Swap kk={active} delay={0.82} pos={abs(1129, 323, 248)} style={{ lineHeight: "30px" }} className="font-gotham text-[30px] font-medium text-white">
+        <Swap kk={active} delay={0.82} pos={abs(1129, 358, 248)} style={{ lineHeight: "30px" }} className="font-gotham text-[30px] font-medium text-white">
           {p.name}
         </Swap>
-        <Swap kk={active} delay={0.9} pos={abs(1129, 366, 248)} style={{ color: "#E9E6E6", lineHeight: "24px" }} className="font-poppins text-[16px] font-light">
+        <Swap kk={active} delay={0.9} pos={abs(1129, 400, 248)} style={{ color: "#E9E6E6", lineHeight: "24px" }} className="font-poppins text-[16px] font-light">
           {p.desc}
         </Swap>
-        {/* likes pill @(1129,504) 109×35 + thumb-down @(1263,514) */}
+        {/* likes pill — sits right under the stars (above the name) @(1129,305) 109×35 */}
         <motion.div
           {...rise(0.46)}
-          style={{ ...abs(1129, 504, 109, 35), borderRadius: 110 }}
+          style={{ ...abs(1129, 288, 109, 35), borderRadius: 110 }}
           className="flex items-center gap-2 bg-white/[0.10] pl-3 font-poppins text-[14px] font-light text-[#E9E6E6]"
         >
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -411,9 +411,6 @@ export default function Hero() {
             </motion.span>
           </AnimatePresence>
         </motion.div>
-        <svg style={abs(1263, 514, 18, 15)} viewBox="0 0 24 24" fill="none" stroke="#9A9A9A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M17 14V3" /><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" />
-        </svg>
         </div>
         {/* ---- end rating card group ---- */}
 
@@ -592,9 +589,6 @@ export default function Hero() {
                     </svg>
                     {p.likes} Likes
                   </span>
-                  <svg className="h-4 w-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M17 14V3" /><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" />
-                  </svg>
                 </div>
               </div>
             </div>

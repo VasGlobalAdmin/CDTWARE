@@ -18,14 +18,16 @@ export default function Categories({ panel = false }) {
   return (
     <section
       id="categories"
-      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 ${
+      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 ${
         panel ? "bg-transparent" : "bg-ink"
       }`}
     >
       {/* ── Figma "Group 10" glow — biased right. Shared/static when pinned. ── */}
       {!panel && <Glow side="right" rotate={0} />}
 
-      <div className="container-site relative flex w-full flex-col">
+      {/* Categories uses a slightly roomier gutter than the shared container-wide
+          (more breathing space on all sides) — same max-widths, larger px. */}
+      <div className="relative mx-auto flex w-full max-w-site flex-col px-6 sm:px-10 lg:px-[120px] 2xl:max-w-[1760px] 2xl:px-[140px] 3xl:max-w-[2400px] 3xl:px-[160px]">
         <Reveal from="left" className="shrink-0">
           <p className="eyebrow">What We Carry</p>
           <SectionHeading top="Product" bottom="Categories" />
@@ -38,13 +40,13 @@ export default function Categories({ panel = false }) {
             independent of the pinned panel's composited layer — otherwise the
             backface flattens after a scroll and the card shows its name by
             default. ── */}
-        <div className="mt-8 grid w-full grid-cols-2 gap-4 sm:gap-5 md:mt-16 md:max-w-[1176px] md:grid-cols-4">
+        <div className="mt-8 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 2xl:gap-8 3xl:gap-10 md:mt-8 md:grid-cols-4">
           {CATS.map((c, i) => (
             <Reveal key={i} from="zoom" delay={i * 70}>
               <a
                 href="#contact"
                 aria-label={c.label}
-                className="group block aspect-[279/236] w-full outline-none [perspective:800px]"
+                className="group block aspect-[1.18/1] w-full outline-none [perspective:800px]"
               >
                 <div className="relative h-full w-full transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-visible:[transform:rotateY(180deg)]">
                   {/* Front (default) — a blurred version of THIS category's image
@@ -69,20 +71,24 @@ export default function Categories({ panel = false }) {
                       />
                     </div>
                     {/* 3D-lifted content */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-4 text-center [transform-style:preserve-3d]">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 px-3 text-center [transform-style:preserve-3d] sm:gap-3 sm:px-4">
                       <div style={{ transform: "translateZ(70px)" }}>
-                        <c.icon className="h-9 w-9 text-brand drop-shadow-[0_6px_18px_rgba(0,0,0,0.6)] sm:h-10 sm:w-10" />
+                        <c.icon className="h-8 w-8 text-brand drop-shadow-[0_6px_18px_rgba(0,0,0,0.6)] sm:h-9 sm:w-9 lg:h-10 lg:w-10 3xl:h-12 3xl:w-12" />
                       </div>
                       <div style={{ transform: "translateZ(55px)" }}>
-                        <h3 className="font-playfair text-xl font-bold leading-tight tracking-wide text-cream [text-shadow:0_6px_24px_rgba(0,0,0,0.7)] sm:text-2xl">
+                        <h3 className="font-playfair text-lg font-bold leading-tight tracking-wide text-cream [text-shadow:0_6px_24px_rgba(0,0,0,0.7)] sm:text-xl lg:text-2xl 3xl:text-[2rem]">
                           {c.label}
                         </h3>
                       </div>
-                      <div style={{ transform: "translateZ(45px)" }}>
-                        <span className="block h-px w-12 bg-cream/80" />
+                      <div style={{ transform: "translateZ(45px)" }} className="md:hidden xl:block">
+                        <span className="block h-px w-12 bg-cream/80 3xl:w-16" />
                       </div>
-                      <div style={{ transform: "translateZ(35px)" }}>
-                        <p className="font-poppins text-[11px] font-light uppercase tracking-[0.26em] text-white/70">
+                      {/* "Explore Now" is hidden in the cramped 4-col range
+                          (md–lg, where short 1.18 cards can't fit a 2-line title
+                          + this line); shown on the roomier 2-col phone/tablet
+                          and on xl+ desktop where the cards are tall enough. */}
+                      <div style={{ transform: "translateZ(35px)" }} className="md:hidden xl:block">
+                        <p className="font-poppins text-[11px] font-light uppercase tracking-[0.26em] text-white/70 3xl:text-sm">
                           Explore Now
                         </p>
                       </div>
