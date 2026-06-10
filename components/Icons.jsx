@@ -28,6 +28,9 @@ export const Icon = {
     </svg>
   ),
   arrowUR: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>),
+  chevL: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M15 6 9 12l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>),
+  chevR: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>),
+  chevD: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>),
   star: (p) => (<svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M12 2.5 14.9 8l6.1.9-4.4 4.3 1 6.1L12 16.9 6.4 19.3l1-6.1L3 8.9 9.1 8 12 2.5Z" /></svg>),
   thumbUp: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M7 10v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3Zm0 0 4-7a2 2 0 0 1 2 2v3h5a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 18.8 19H7" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" /></svg>),
   thumbDown: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M17 14V5h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-3Zm0 0-4 7a2 2 0 0 1-2-2v-3H6a2 2 0 0 1-2-2.3l1.2-6A2 2 0 0 1 7.2 5H17" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" /></svg>),

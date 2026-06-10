@@ -1,0 +1,10 @@
+# Netlify configuration.
+# Used when the site is connected to Netlify via Git (Netlify runs the build
+# itself). For a manual drag-and-drop / ZIP deploy this file is ignored — in
+# that case just upload the contents of the generated `out/` folder.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "18"

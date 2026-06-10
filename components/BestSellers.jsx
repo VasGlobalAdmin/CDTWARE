@@ -4,6 +4,9 @@ import Reveal from "./Reveal";
 import Glow from "./Glow";
 import SectionHeading from "./SectionHeading";
 
+// Clicking any product card sends the visitor to the online store.
+const STORE_URL = "https://cdtweb.woopsa.app/";
+
 // Same four products as the hero slides.
 const SELLERS = [
   {
@@ -65,11 +68,15 @@ function TiltCard({ s, i }) {
 
   return (
     <Reveal from="up" delay={i * 90} className="h-full [perspective:1100px]">
-      <article
+      <a
         ref={ref}
+        href={STORE_URL}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`${s.name} — shop online`}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
-        className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition-[transform,box-shadow,border-color] duration-300 ease-out [transform-style:preserve-3d] will-change-transform hover:border-white/25 hover:shadow-[0_34px_70px_-24px_rgba(0,0,0,0.85)]"
+        className="group relative block h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition-[transform,box-shadow,border-color] duration-300 ease-out [transform-style:preserve-3d] will-change-transform hover:border-white/25 hover:shadow-[0_34px_70px_-24px_rgba(0,0,0,0.85)]"
         style={{ transform: "rotateX(0deg) rotateY(0deg)" }}
       >
         {/* Image — lifted toward the viewer for parallax depth */}
@@ -102,7 +109,7 @@ function TiltCard({ s, i }) {
 
         {/* cursor-following sheen */}
         <div data-glare className="pointer-events-none absolute inset-0 z-10 rounded-2xl" />
-      </article>
+      </a>
     </Reveal>
   );
 }

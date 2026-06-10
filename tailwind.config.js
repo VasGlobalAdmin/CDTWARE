@@ -11,6 +11,13 @@ module.exports = {
       // boxed in the middle with huge side margins.
       screens: {
         "3xl": "1920px",
+        // "hpin" = the condition under which the HScroll panels PIN and sweep
+        // horizontally. Requires a landscape window that is both wide AND tall
+        // enough; on short windows this fails so the panels fall back to normal
+        // vertical stacking (HScroll's stack() path) instead of clipping content
+        // inside a locked 100vh pane. Keep this raw query in sync with the
+        // matchMedia() string in components/HScroll.jsx.
+        hpin: { raw: "(min-width: 768px) and (min-height: 700px) and (orientation: landscape)" },
       },
       colors: {
         cream: "#FAF8F2",

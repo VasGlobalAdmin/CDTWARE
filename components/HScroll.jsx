@@ -43,7 +43,13 @@ export default function HScroll({
     if (!wrap || !track) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const horizMQ = window.matchMedia("(min-width: 768px) and (orientation: landscape)");
+    // Pin + sweep only when the window is wide AND tall enough (landscape). On
+    // short windows this is false, so apply() falls back to stack() and the
+    // panels scroll vertically instead of being clipped. Keep this string in
+    // sync with the `hpin` screen in tailwind.config.js.
+    const horizMQ = window.matchMedia(
+      "(min-width: 768px) and (min-height: 700px) and (orientation: landscape)"
+    );
     const isHoriz = () => horizMQ.matches && !reduce;
     let raf = 0;
     const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
@@ -121,13 +127,13 @@ export default function HScroll({
       data-hscroll={panels.length}
     >
       <div
-        className={`relative md:landscape:sticky md:landscape:top-0 md:landscape:h-screen md:landscape:overflow-hidden ${bgClass}`}
+        className={`relative hpin:sticky hpin:top-0 hpin:h-screen hpin:overflow-hidden ${bgClass}`}
       >
         {/* shared static background (colour lives on the wrapper above) */}
         {background}
 
         {/* horizontal-progress bar (landscape only) */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-40 hidden h-[3px] bg-white/5 md:landscape:block">
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-40 hidden h-[3px] bg-white/5 hpin:block">
           <div
             ref={barRef}
             className="h-full w-full origin-left bg-brand"
@@ -138,13 +144,13 @@ export default function HScroll({
         {/* panel track — stacks vertically in portrait, runs sideways in landscape */}
         <div
           ref={trackRef}
-          className="relative flex w-full flex-col will-change-transform md:landscape:h-full md:landscape:w-max md:landscape:flex-row"
+          className="relative flex w-full flex-col will-change-transform hpin:h-full hpin:w-max hpin:flex-row"
         >
           {panels.map((p, i) => (
             <div
               key={i}
               data-hpanel={i}
-              className="relative w-full shrink-0 md:landscape:h-full md:landscape:w-screen"
+              className="relative w-full shrink-0 hpin:h-full hpin:w-screen"
             >
               {/* inner wrapper is what the parallax transform is applied to */}
               <div className="h-full w-full will-change-transform">{p}</div>
@@ -154,7 +160,7 @@ export default function HScroll({
 
         {/* scroll cue (landscape only) */}
         {hint && (
-          <div className="pointer-events-none absolute bottom-7 left-1/2 z-40 hidden -translate-x-1/2 items-center gap-3 text-white/55 md:landscape:flex">
+          <div className="pointer-events-none absolute bottom-7 left-1/2 z-40 hidden -translate-x-1/2 items-center gap-3 text-white/55 hpin:flex">
             <span className="font-dm text-[11px] font-bold uppercase tracking-[0.4em]">Scroll</span>
             <span className="block h-px w-12 bg-white/40" />
           </div>

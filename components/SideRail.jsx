@@ -9,6 +9,7 @@ const ITEMS = [
   { icon: Icon.tag, href: "#best-sellers", id: "best-sellers", label: "Best Sellers" },
   { icon: Icon.list, href: "#why-cdt", id: "why-cdt", label: "Why CDT" },
   { icon: Icon.help, href: "#faq", id: "faq", label: "FAQ" },
+  { icon: Icon.star, href: "#reviews", id: "reviews", label: "Reviews" },
   { icon: Icon.phone, href: "#contact", id: "contact", label: "Contact" },
 ];
 

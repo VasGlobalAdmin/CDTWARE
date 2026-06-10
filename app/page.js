@@ -6,6 +6,7 @@ import Categories from "@/components/Categories";
 import BestSellers from "@/components/BestSellers";
 import WhyCDT from "@/components/WhyCDT";
 import Faq from "@/components/Faq";
+import Reviews from "@/components/Reviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import HScroll from "@/components/HScroll";
@@ -49,7 +50,9 @@ export default function Home() {
           <Faq panel />
         </HScroll>
 
-        {/* Contact returns to a normal vertical scroll. */}
+        {/* Get In Touch (reviews + form) and the Contact "Get it Now" section
+            both scroll vertically — straight down, no horizontal sweep. */}
+        <Reviews />
         <Contact />
       </main>
       <Footer />

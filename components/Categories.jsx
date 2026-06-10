@@ -3,6 +3,9 @@ import Glow from "./Glow";
 import SectionHeading from "./SectionHeading";
 import { Icon } from "./Icons";
 
+// Clicking any category / product card sends the visitor to the online store.
+const STORE_URL = "https://cdtweb.woopsa.app/";
+
 const CATS = [
   { label: "Tobacco Products", img: "/images/categories/cat-tobacco.png", icon: Icon.leaf },
   { label: "Cigarettes", img: "/images/categories/cat-cigarettes.png", icon: Icon.cigarette },
@@ -44,8 +47,10 @@ export default function Categories({ panel = false }) {
           {CATS.map((c, i) => (
             <Reveal key={i} from="zoom" delay={i * 70}>
               <a
-                href="#contact"
-                aria-label={c.label}
+                href={STORE_URL}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${c.label} — shop online`}
                 className="group block aspect-[1.18/1] w-full outline-none [perspective:800px]"
               >
                 <div className="relative h-full w-full transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-visible:[transform:rotateY(180deg)]">

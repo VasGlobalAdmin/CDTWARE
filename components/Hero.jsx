@@ -246,6 +246,32 @@ export default function Hero() {
     setActive(i);
   };
 
+  // "Shop Now" glides to the Get-In-Touch form. The form lives inside a pinned
+  // horizontal block, so on landscape we scroll to the point where THAT panel is
+  // centred (matching the side-rail logic); elsewhere we scroll to the form box.
+  const goToForm = (e) => {
+    e.preventDefault();
+    if (typeof document === "undefined") return;
+    const el = document.getElementById("get-in-touch");
+    if (!el) return;
+    const horiz = window.matchMedia("(min-width: 768px) and (orientation: landscape)").matches;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const panel = el.closest("[data-hpanel]");
+    const wrap = panel && panel.closest("[data-hscroll]");
+    let targetY;
+    if (horiz && !reduced && panel && wrap) {
+      const i = parseInt(panel.dataset.hpanel, 10) || 0;
+      const n = parseInt(wrap.dataset.hscroll, 10) || 1;
+      const wrapTop = wrap.getBoundingClientRect().top + window.scrollY;
+      const span = Math.max(0, wrap.offsetHeight - window.innerHeight);
+      targetY = wrapTop + (n > 1 ? (span * i) / (n - 1) : 0);
+    } else {
+      targetY = el.getBoundingClientRect().top + window.scrollY - 20;
+    }
+    targetY = Math.max(0, Math.round(targetY));
+    window.scrollTo({ top: targetY, behavior: reduced ? "auto" : "smooth" });
+  };
+
   return (
     <section
       id="hero"
@@ -338,7 +364,8 @@ export default function Hero() {
         </Swap>
         <motion.a
           {...rise(0.42)}
-          href="#best-sellers"
+          href="#get-in-touch"
+          onClick={goToForm}
           style={{ ...abs(600, 360, 145, 48), backgroundColor: "#E22423", borderRadius: 29 }}
           className="flex items-center justify-center font-gotham text-[18px] font-normal text-cream transition-transform hover:scale-105"
         >
@@ -529,7 +556,8 @@ export default function Hero() {
               {p.titleBold}
             </Mobile>
             <a
-              href="#best-sellers"
+              href="#get-in-touch"
+              onClick={goToForm}
               className="mt-[clamp(1rem,4vw,1.5rem)] inline-flex h-12 items-center justify-center rounded-full bg-[#E22423] px-8 font-gotham text-[clamp(0.9rem,4vw,1.05rem)] text-cream shadow-[0_10px_24px_-6px_rgba(226,36,35,0.6)] transition-transform active:scale-95"
             >
               Shop Now
