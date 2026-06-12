@@ -3,22 +3,30 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently -k -n next,api -c cyan,magenta \"next dev -p 3001\" \"node server/index.js\"",
+    "next-only": "next dev",
     "build": "next build",
     "start": "next start",
+    "serve": "node server/index.js --prod",
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "framer-motion": "^12.40.0",
     "gsap": "^3.15.0",
     "next": "14.2.5",
+    "nodemailer": "^6.9.14",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
     "autoprefixer": "10.4.19",
+    "concurrently": "^8.2.2",
+    "http-proxy-middleware": "^2.0.6",
     "pngjs": "^7.0.0",
     "postcss": "8.4.39",
+    "sharp": "^0.35.1",
     "tailwindcss": "3.4.6"
   }
 }

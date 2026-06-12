@@ -6,10 +6,10 @@ import Glow from "./Glow";
 import SectionHeading from "./SectionHeading";
 
 const STATS = [
-  { val: "6K+", label: "Active SKUs" },
-  { val: "1 Day", label: "Delivery" },
-  { val: "Always On", label: "Always Ready" },
-  { val: "24/7", label: "Online Ordering" },
+  { val: "Daily", label: "Fresh Drops & Updates" },
+  { val: "App-Easy", label: "Order Anytime" },
+  { val: "Always", label: "We Stay In Touch" },
+  { val: "Beyond", label: "With You Past The Order" },
 ];
 
 // Accent colours taken verbatim from the Figma cards.
@@ -19,28 +19,28 @@ const FEATURES = [
     accent: "#02AD1C",
     tint: "#CCF3CA",
     title: "We Know SC Like the Back of Our Warehouse",
-    desc: "Every city, every county, every convenience store. we've got South Carolina covered.",
+    desc: "From the Upstate to the Lowcountry, we've put in the miles. We know the roads, the regions, and the stores — so when you need us, we already know how to get to you.",
   },
   {
     icon: Icon.wallet,
     accent: "#E9AF10",
     tint: "#F1F3CA",
     title: "Your Wallet Will Thank You",
-    desc: "Competitive wholesale rates that make every purchase feel like a smart business move.",
+    desc: "We keep our prices fair because we're in this for the long haul, not just the first order. Good value shouldn't be something you have to hunt for.",
   },
   {
     icon: Icon.people,
     accent: "#E91010",
     tint: "#FFE0E0",
     title: "Not Just a Vendor. Your People.",
-    desc: "Real support, real relationships, real results, not just boxes at your door.",
+    desc: "We're not going to disappear after the delivery. We check in, we listen, and when something's off, we make it right. That's just how we do business.",
   },
   {
     icon: Icon.spark,
     accent: "#10C1E9",
     tint: "#DCF8FF",
     title: "Carry What Nobody Else Does",
-    desc: "Our exclusive product lines give your store an edge competitors simply can't copy.",
+    desc: "We work hard to bring in products you won't find everywhere else. It's a small thing that can make a real difference when customers are choosing where to shop.",
   },
 ];
 

@@ -124,9 +124,8 @@ const inputCls =
 
 // Custom dark dropdown — replaces the basic native <select> so the option list
 // matches the form's theme (rounded pills, hover/selected states, animated open).
-function CustomSelect({ options, placeholder = "Select one" }) {
+function CustomSelect({ options, placeholder = "Select one", value, onChange }) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
   const ref = useRef(null);
 
   useEffect(() => {
@@ -177,7 +176,7 @@ function CustomSelect({ options, placeholder = "Select one" }) {
                 role="option"
                 aria-selected={sel}
                 onClick={() => {
-                  setValue(o);
+                  onChange(o);
                   setOpen(false);
                 }}
                 className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-left font-poppins text-sm transition-colors ${
@@ -200,6 +199,48 @@ export default function Reviews({ panel = false }) {
   const [paused, setPaused] = useState(false);
   const r = REVIEWS[idx];
   const go = (d) => setIdx((i) => (i + d + REVIEWS.length) % REVIEWS.length);
+
+  // ── Get In Touch form ──
+  const [lookingFor, setLookingFor] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
+  const [formError, setFormError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus("sending");
+    setFormError("");
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    // Map the form's fields onto what the mailer expects.
+    const payload = {
+      name: (fd.get("fullName") || "").trim(),
+      company: (fd.get("businessName") || "").trim(),
+      email: (fd.get("email") || "").trim(),
+      phone: (fd.get("phone") || "").trim(),
+      lookingFor,
+      message: (fd.get("message") || "").trim(),
+      company_website: fd.get("company_website") || "", // honeypot
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || "Something went wrong. Please try again.");
+      }
+      form.reset();
+      setLookingFor("");
+      setStatus("sent");
+    } catch (err) {
+      setFormError(err.message);
+      setStatus("error");
+    }
+  }
 
   // Auto-advance the featured testimonial every 5s; hovering the card pauses it
   // so a visitor can finish reading.
@@ -354,16 +395,26 @@ export default function Reviews({ panel = false }) {
               Fill out the form and our team will contact you shortly.
             </p>
 
-            <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
+              {/* Honeypot — hidden from humans, catches bots. */}
+              <input
+                type="text"
+                name="company_website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
+              />
+
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Full Name">
-                  <input type="text" name="fullName" placeholder="Enter your full name" className={inputCls} />
+                  <input type="text" name="fullName" placeholder="Enter your full name" className={inputCls} required />
                 </Field>
                 <Field label="Business Name">
                   <input type="text" name="businessName" placeholder="Enter your business name" className={inputCls} />
                 </Field>
                 <Field label="Email Address">
-                  <input type="email" name="email" placeholder="Enter your email address" className={inputCls} />
+                  <input type="email" name="email" placeholder="Enter your email address" className={inputCls} required />
                 </Field>
                 <Field label="Phone Number">
                   <input type="tel" name="phone" placeholder="Enter your phone number" className={inputCls} />
@@ -371,7 +422,7 @@ export default function Reviews({ panel = false }) {
               </div>
 
               <Field label="What Are You Looking For?">
-                <CustomSelect options={LOOKING_FOR} />
+                <CustomSelect options={LOOKING_FOR} value={lookingFor} onChange={setLookingFor} />
               </Field>
 
               <Field label="Message">
@@ -380,15 +431,26 @@ export default function Reviews({ panel = false }) {
                   rows={4}
                   placeholder="Tell us about your store or equipment"
                   className={`${inputCls} resize-none`}
+                  required
                 />
               </Field>
 
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-brand px-7 py-3 font-gotham text-sm font-medium text-cream shadow-lg shadow-brand/20 transition-transform hover:scale-[1.03]"
+                disabled={status === "sending"}
+                className="inline-flex items-center justify-center rounded-full bg-brand px-7 py-3 font-gotham text-sm font-medium text-cream shadow-lg shadow-brand/20 transition-transform hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
               >
-                Submit Request
+                {status === "sending" ? "Sending…" : "Submit Request"}
               </button>
+
+              {status === "sent" && (
+                <p className="font-poppins text-[13px] text-emerald-400">
+                  Thanks! Your request is on its way — our team will be in touch shortly.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="font-poppins text-[13px] text-brand">{formError}</p>
+              )}
             </form>
           </div>
         </Reveal>

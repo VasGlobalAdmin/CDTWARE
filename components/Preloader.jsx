@@ -19,7 +19,7 @@ const ASSETS = [
   "/images/hero-lamp.svg",
   "/images/hero-plant.svg",
   "/images/hero-circle.png",
-  "/images/teton-cluster.png",
+  "/images/hero-teton.png",
   "/images/hero-lion.png",
   "/images/cdt-logo.svg",
 ];

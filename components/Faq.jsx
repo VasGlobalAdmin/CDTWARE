@@ -22,36 +22,43 @@ const FAQS = [
   {
     q: "Why choose CDT Warehouse as your wholesale distributor in South Carolina?",
     a: {
-      intro:
-        "We combine the widest in-state selection with next-business-day delivery and pricing that actually protects your margins. You get a real local partner — not a faceless catalog.",
+      intro: "CDT Warehouse is built for retailers and manufacturers who need:",
+      steps: [
+        "Reliable inventory and consistent supply.",
+        "Competitive wholesale pricing.",
+        "Fast delivery options.",
+        "Full compliance with South Carolina regulations.",
+      ],
+      outro:
+        "We're more than a supplier—we're your wholesale partner for long-term growth.",
     },
   },
   {
     q: "Do I need a license to buy wholesale tobacco in South Carolina?",
     a: {
       intro:
-        "Yes. To purchase wholesale tobacco you'll need a valid retail license and any state-required tobacco permits. Our team helps you confirm exactly what's needed before your first order.",
+        "Yes. CDT Warehouse requires all retailers purchasing tobacco products to have the proper South Carolina tobacco license. This ensures full compliance with state and federal regulations.",
     },
   },
   {
     q: "Can convenience store owners buy directly from a wholesale distributor?",
     a: {
       intro:
-        "Absolutely. CDT works directly with C-store owners — no middleman. That direct relationship is how we keep prices low and restocking fast.",
+        "Yes—retailers can buy directly from CDT Warehouse. We specialize in serving convenience stores, vape shops, and small businesses by providing direct access to wholesale products without unnecessary middlemen.",
     },
   },
   {
     q: "Do retailers pay tobacco tax when buying wholesale in South Carolina?",
     a: {
       intro:
-        "Applicable tobacco taxes are handled according to South Carolina law. We make sure your invoices are clear and compliant so there are no surprises at tax time.",
+        "In most cases, tobacco taxes are handled within the supply chain, but retailers are still responsible for compliance with South Carolina tax laws. We help ensure all products are properly sourced and compliant.",
     },
   },
   {
     q: "What is a wholesale distributor and how does it work?",
     a: {
       intro:
-        "A wholesale distributor buys products in bulk and supplies them to retailers at competitive rates. CDT stocks, prices, and delivers so your shelves stay full without the hassle.",
+        "CDT Warehouse operates as a wholesale distributor by purchasing products in bulk from manufacturers and supplying them to retailers at discounted prices. This allows businesses to streamline purchasing, reduce costs, and maintain consistent inventory without managing multiple suppliers.",
     },
   },
 ];

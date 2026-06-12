@@ -14,24 +14,24 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 // Active item drives the whole hero. Index 0 = TETON (the Figma default).
 const PRODUCTS = [
   {
-    tag: "Ciggrate", name: "Teton", rank: "#4 Most loved item",
-    titleLight: "URAP ASLI", titleBold: "TETON", rating: "4.9", likes: 46, img: "/images/seller-teton.png", thumb: "/images/teton-cluster.png",
-    desc: "Great wholesale prices, delivery that doesn't ghost you, and a team that picks up on the first ring. Sounds too good? Come find out.",
+    tag: "Cigarettes", name: "Teton", rank: "#1 Retailers' Go-To Choice",
+    titleLight: "EVERYDAY", titleBold: "TETON", rating: "4.9", likes: 46, img: "/images/hero-teton.png", thumb: "/images/hero-teton-thumb.png",
+    desc: "South Carolina's exclusive value champion. Big on savings, easy on budgets, and available only through CDT Wholesale.",
   },
   {
-    tag: "Scale", name: "Boost Plus", rank: "#2 Best mover this week",
-    titleLight: "POWER LINE", titleBold: "BOOST+", rating: "4.8", likes: 61, img: "/images/about-scales.png", thumb: "/images/thumb-scale.png",
-    desc: "Stocked fast, priced right — the line C-store owners reorder without thinking twice. Next business day across South Carolina.",
+    tag: "Scales", name: "Boost Plus", rank: "#2 Trending in Tools & Gadgets",
+    titleLight: "PRECISION", titleBold: "BOOST+", rating: "4.8", likes: 61, img: "/images/hero-scale.png", thumb: "/images/hero-scale-thumb.png",
+    desc: "Small in size. Big on accuracy. With multiple variants available, there's a Boost Plus Scale for almost every measuring need.",
   },
   {
-    tag: "Mobile Accessories", name: "Boost Plus", rank: "#7 Trending in accessories",
-    titleLight: "EVERYDAY", titleBold: "BOOST+", rating: "4.7", likes: 38, img: "/images/about-buds.png", thumb: "/images/thumb-earbuds.png",
-    desc: "Cables, chargers and the impulse buys by the register. High margin, always in stock, one quick order away.",
+    tag: "Mobile Accessories", name: "Boost Plus", rank: "#1 Tech Essential Collection",
+    titleLight: "ESSENTIAL", titleBold: "BOOST+", rating: "4.9", likes: 38, img: "/images/hero-acc.png", thumb: "/images/hero-acc-thumb.png",
+    desc: "Chargers, cables, wireless earbuds, adapters, and more. If it powers, connects, or keeps devices running, chances are we've got it.",
   },
   {
-    tag: "Cigarillos", name: "Raw Leaf", rank: "#1 Customer favorite",
-    titleLight: "PREMIUM", titleBold: "RAW LEAF", rating: "5.0", likes: 92, img: "/images/about-collage.png", thumb: "/images/thumb-rawleaf.png",
-    desc: "The shelf that sells itself. Premium leaf at wholesale prices, restocked before you ever run out.",
+    tag: "Cigarillos", name: "Raw Leaf", rank: "Newest Shelf Addition",
+    titleLight: "JUST 89¢", titleBold: "RAW LEAF", rating: "NEW", likes: 92, img: "/images/hero-rawleaf.png", thumb: "/images/hero-rawleaf-thumb.png",
+    desc: "Raw Leaf delivers premium quality with an 89¢ pre-priced value customers love. Built for strong sell-through and even stronger margins.",
   },
 ];
 const THUMB_X = [169, 342, 515, 688];
@@ -408,9 +408,11 @@ export default function Hero() {
         >
           {p.rating}
         </Swap>
-        <motion.div {...rise(0.4)} style={abs(1131, 250, 220)} className="pointer-events-none">
-          <StarRow value={p.rating} size={20} gap={3} />
-        </motion.div>
+        {!isNaN(parseFloat(p.rating)) && (
+          <motion.div {...rise(0.4)} style={abs(1131, 250, 220)} className="pointer-events-none">
+            <StarRow value={p.rating} size={20} gap={3} />
+          </motion.div>
+        )}
         <Swap kk={active} delay={0.82} pos={abs(1129, 358, 248)} style={{ lineHeight: "30px" }} className="font-gotham text-[30px] font-medium text-white">
           {p.name}
         </Swap>
@@ -602,9 +604,11 @@ export default function Hero() {
                 <span className="block font-gotham text-[clamp(1.9rem,9vw,2.4rem)] font-black leading-none text-cream">
                   {p.rating}
                 </span>
-                <div className="mt-1.5 flex justify-center">
-                  <StarRow value={p.rating} size={14} gap={2} />
-                </div>
+                {!isNaN(parseFloat(p.rating)) && (
+                  <div className="mt-1.5 flex justify-center">
+                    <StarRow value={p.rating} size={14} gap={2} />
+                  </div>
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <Mobile kk={active} className="font-gotham text-[clamp(1.1rem,5vw,1.45rem)] font-medium leading-tight text-white">

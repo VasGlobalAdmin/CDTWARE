@@ -10,32 +10,32 @@ const STORE_URL = "https://cdtweb.woopsa.app/";
 // Same four products as the hero slides.
 const SELLERS = [
   {
-    tag: "Ciggrate",
+    tag: "Cigarettes",
     name: "Teton",
-    desc: "America's favorite natural leaf cigar. All popular varieties.",
+    desc: "South Carolina's exclusive value favorite. Strong demand, unbeatable pricing, and available only through CDT Wholesale.",
     img: "/images/seller-teton.png",
     badge: "Top Seller",
   },
   {
-    tag: "Scale",
-    name: "Boost Plus",
-    desc: "High-demand brand with consistent quality across all SKUs.",
-    img: "/images/seller-boost1.jpg",
+    tag: "Scales",
+    name: "Boost Plus Scale",
+    desc: "Multiple sizes. Reliable accuracy. One smart choice for everyday measuring needs.",
+    img: "/images/seller-scale.png",
     badge: "Popular",
   },
   {
     tag: "Mobile Accessories",
-    name: "Boost Plus",
-    desc: "Strong retail velocity at C-stores nationwide.",
-    img: "/images/seller-boost2.jpg",
+    name: "Boost Plus Mobile Accessories",
+    desc: "From charging cables to wireless earbuds, we've got the essentials customers ask for every day.",
+    img: "/images/seller-accessories.png",
     badge: "Hot",
   },
   {
     tag: "Cigarillos",
     name: "Raw Leaf",
-    desc: "Premium cigarillo with smooth flavor. Perennial favorite.",
-    img: "/images/seller-rawleaf.jpg",
-    badge: null,
+    desc: "New. Exclusive. Just 89¢. A small price tag with big shelf appeal.",
+    img: "/images/seller-rawleaf.png",
+    badge: "New",
   },
 ];
 
@@ -127,7 +127,7 @@ export default function BestSellers({ panel = false }) {
 
       <div className="container-wide relative">
         <Reveal from="left">
-          <p className="eyebrow">Top Products</p>
+          <p className="eyebrow">Top Sellers</p>
           <SectionHeading top="Best" bottom="Sellers" />
         </Reveal>
 

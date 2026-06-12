@@ -184,16 +184,16 @@ export default function About() {
               </span>
               <h2 className="font-gotham font-bold leading-[1.04] tracking-tight text-cream [text-shadow:0_2px_12px_rgba(0,0,0,0.85),0_1px_3px_rgba(0,0,0,0.9)]">
                 <span className="block overflow-hidden">
-                  <span className="block animate-textReveal [animation-delay:160ms] text-[clamp(30px,7vw,72px)]">Your Local Wholesale</span>
+                  <span className="block animate-textReveal [animation-delay:160ms] text-[clamp(30px,7vw,72px)]">One warehouse.</span>
                 </span>
                 <span className="block overflow-hidden">
-                  <span className="block animate-textReveal [animation-delay:300ms] text-[clamp(30px,7vw,72px)]">Partner</span>
+                  <span className="block animate-textReveal [animation-delay:300ms] text-[clamp(26px,6vw,60px)]">Everything your store needs.</span>
                 </span>
               </h2>
-              <p className="mt-4 max-w-[560px] font-poppins text-[clamp(13px,3.4vw,17px)] font-light leading-relaxed text-muted opacity-0 animate-fadeUp [text-shadow:0_1px_8px_rgba(0,0,0,0.9)] [animation-delay:460ms] sm:mt-5">
-                CDT Distribution is built for C-store owners who need the right products at the right
-                price — delivered the next business day. We cut the middleman and bring unbeatable
-                value.
+              <p className="mt-4 max-w-[600px] font-poppins text-[clamp(13px,3.4vw,17px)] font-light leading-relaxed text-muted opacity-0 animate-fadeUp [text-shadow:0_1px_8px_rgba(0,0,0,0.9)] [animation-delay:460ms] sm:mt-5">
+                We&apos;ve been stocking South Carolina before it was cool. Massive range, exclusive
+                deals, zero fluff — your go-to wholesale supplier for smoke essentials, disposables &amp;
+                groceries across South Carolina for 10+ years and counting.
               </p>
             </div>
           </article>

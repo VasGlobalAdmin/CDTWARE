@@ -7,7 +7,7 @@ import { Icon } from "./Icons";
 const STORE_URL = "https://cdtweb.woopsa.app/";
 
 const CATS = [
-  { label: "Tobacco Products", img: "/images/categories/cat-tobacco.png", icon: Icon.leaf },
+  { label: "Smoke Essential", img: "/images/categories/cat-tobacco.png", icon: Icon.leaf },
   { label: "Cigarettes", img: "/images/categories/cat-cigarettes.png", icon: Icon.cigarette },
   { label: "General Grocery", img: "/images/categories/cat-grocery.png", icon: Icon.cart },
   { label: "Beverage", img: "/images/categories/cat-beverage.png", icon: Icon.cup },
