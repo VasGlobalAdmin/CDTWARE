@@ -24,9 +24,11 @@ npm run dev      # http://localhost:3000
 Production:
 
 ```bash
-npm run build
-npm start
+npm run build    # generates a fully static site in ./out
 ```
+
+Deploy the `out/` folder to any static host (e.g. Netlify drag-and-drop). There is no
+backend — the contact form posts directly to the Woopsa admin API from the browser.
 
 > Note: do **not** run `npm run build` while `npm run dev` is running — they share the
 > `.next` folder. Stop the dev server first.

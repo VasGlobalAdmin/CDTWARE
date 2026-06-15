@@ -66,6 +66,10 @@ const REVIEWS = [
   },
 ];
 
+// Public endpoint that receives contact enquiries. The form posts here directly
+// from the browser — there is no backend.
+const CONNECT_API_URL = "https://adminapi.woopsa.app/api/v1/connected";
+
 const LOOKING_FOR = [
   "Wholesale tobacco & cigarettes",
   "Convenience store supply",
@@ -109,12 +113,22 @@ function RatingStars({ value = 5, size = 16, gap = 2 }) {
   );
 }
 
-// Styled label + control for the form (labels match the image exactly).
-function Field({ label, children }) {
+// Email format check, mirrored on the server.
+const isEmail = (s = "") => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s).trim());
+
+// Styled label + control for the form (labels match the image exactly). Shows a
+// red asterisk for required fields and an inline error message below the control.
+function Field({ label, required = false, error, children }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block font-poppins text-[13px] font-medium text-cream">{label}</span>
+      <span className="mb-1.5 block font-poppins text-[13px] font-medium text-cream">
+        {label}
+        {required && <span className="text-brand"> *</span>}
+      </span>
       {children}
+      {error && (
+        <span className="mt-1 block font-poppins text-[12px] text-brand">{error}</span>
+      )}
     </label>
   );
 }
@@ -124,7 +138,7 @@ const inputCls =
 
 // Custom dark dropdown — replaces the basic native <select> so the option list
 // matches the form's theme (rounded pills, hover/selected states, animated open).
-function CustomSelect({ options, placeholder = "Select one", value, onChange }) {
+function CustomSelect({ options, placeholder = "Select one", value, onChange, invalid = false }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -150,7 +164,7 @@ function CustomSelect({ options, placeholder = "Select one", value, onChange }) 
         aria-expanded={open}
         className={`${inputCls} flex items-center justify-between gap-2 text-left ${
           open ? "border-brand/60 bg-white/[0.06]" : ""
-        }`}
+        } ${invalid ? "border-brand/70" : ""}`}
       >
         <span className={value ? "text-cream" : "text-white/35"}>{value || placeholder}</span>
         <Icon.chevD
@@ -204,15 +218,30 @@ export default function Reviews({ panel = false }) {
   const [lookingFor, setLookingFor] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
   const [formError, setFormError] = useState("");
+  const [errors, setErrors] = useState({}); // per-field required-field errors
+
+  // Clear a single field's error as soon as the user starts fixing it.
+  const clearError = (field) =>
+    setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
+
+  // Validate the required fields; returns a { field: message } object.
+  function validate(values) {
+    const e = {};
+    if (!values.name) e.fullName = "Please enter your full name.";
+    if (!values.email) e.email = "Please enter your email address.";
+    else if (!isEmail(values.email)) e.email = "Please enter a valid email address.";
+    if (!values.phone) e.phone = "Please enter your phone number.";
+    if (!values.lookingFor) e.lookingFor = "Please choose what you're looking for.";
+    if (!values.message) e.message = "Please enter a message.";
+    return e;
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setStatus("sending");
-    setFormError("");
 
     const form = e.currentTarget;
     const fd = new FormData(form);
-    // Map the form's fields onto what the mailer expects.
+    // Map the form's fields onto what the admin API expects.
     const payload = {
       name: (fd.get("fullName") || "").trim(),
       company: (fd.get("businessName") || "").trim(),
@@ -223,21 +252,43 @@ export default function Reviews({ panel = false }) {
       company_website: fd.get("company_website") || "", // honeypot
     };
 
+    // Required-field validation — block submission and surface inline errors.
+    const fieldErrors = validate(payload);
+    if (Object.keys(fieldErrors).length) {
+      setErrors(fieldErrors);
+      setStatus("idle");
+      setFormError("");
+      return;
+    }
+
+    setErrors({});
+
+    // Honeypot — bots fill the hidden field; humans leave it empty. Silently
+    // pretend success without hitting the API.
+    if (payload.company_website) {
+      form.reset();
+      setLookingFor("");
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("sending");
+    setFormError("");
+
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(CONNECT_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || "Something went wrong. Please try again.");
+      if (!res.ok) {
+        throw new Error("Something went wrong. Please try again.");
       }
       form.reset();
       setLookingFor("");
       setStatus("sent");
     } catch (err) {
-      setFormError(err.message);
+      setFormError(err.message || "Something went wrong. Please try again.");
       setStatus("error");
     }
   }
@@ -407,31 +458,61 @@ export default function Reviews({ panel = false }) {
               />
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <Field label="Full Name">
-                  <input type="text" name="fullName" placeholder="Enter your full name" className={inputCls} required />
+                <Field label="Full Name" required error={errors.fullName}>
+                  <input
+                    type="text"
+                    name="fullName"
+                    placeholder="Enter your full name"
+                    aria-invalid={!!errors.fullName}
+                    onChange={() => clearError("fullName")}
+                    className={`${inputCls} ${errors.fullName ? "border-brand/70" : ""}`}
+                  />
                 </Field>
                 <Field label="Business Name">
                   <input type="text" name="businessName" placeholder="Enter your business name" className={inputCls} />
                 </Field>
-                <Field label="Email Address">
-                  <input type="email" name="email" placeholder="Enter your email address" className={inputCls} required />
+                <Field label="Email Address" required error={errors.email}>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email address"
+                    aria-invalid={!!errors.email}
+                    onChange={() => clearError("email")}
+                    className={`${inputCls} ${errors.email ? "border-brand/70" : ""}`}
+                  />
                 </Field>
-                <Field label="Phone Number">
-                  <input type="tel" name="phone" placeholder="Enter your phone number" className={inputCls} />
+                <Field label="Phone Number" required error={errors.phone}>
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    aria-invalid={!!errors.phone}
+                    onChange={() => clearError("phone")}
+                    className={`${inputCls} ${errors.phone ? "border-brand/70" : ""}`}
+                  />
                 </Field>
               </div>
 
-              <Field label="What Are You Looking For?">
-                <CustomSelect options={LOOKING_FOR} value={lookingFor} onChange={setLookingFor} />
+              <Field label="What Are You Looking For?" required error={errors.lookingFor}>
+                <CustomSelect
+                  options={LOOKING_FOR}
+                  value={lookingFor}
+                  onChange={(v) => {
+                    setLookingFor(v);
+                    clearError("lookingFor");
+                  }}
+                  invalid={!!errors.lookingFor}
+                />
               </Field>
 
-              <Field label="Message">
+              <Field label="Message" required error={errors.message}>
                 <textarea
                   name="message"
                   rows={4}
                   placeholder="Tell us about your store or equipment"
-                  className={`${inputCls} resize-none`}
-                  required
+                  aria-invalid={!!errors.message}
+                  onChange={() => clearError("message")}
+                  className={`${inputCls} resize-none ${errors.message ? "border-brand/70" : ""}`}
                 />
               </Field>
 
