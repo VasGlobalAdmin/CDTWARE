@@ -30,6 +30,12 @@ module.exports = {
         // the vertical room and keeps the full-size design.
         short: { raw: "(max-height: 1080px) and (orientation: landscape)" },
         shorter: { raw: "(max-height: 760px) and (orientation: landscape)" },
+        // Row-scoped variants: same short heights, but ONLY below the width where
+        // a grid collapses to a single row (1280px). Used by Best Sellers, whose
+        // cards shrink only when they wrap to TWO rows (768–1279px) — at ≥1280px
+        // it's one full-size row, so the cards must keep their natural proportions.
+        shortrow: { raw: "(max-width: 1279px) and (max-height: 1080px) and (orientation: landscape)" },
+        shorterrow: { raw: "(max-width: 1279px) and (max-height: 760px) and (orientation: landscape)" },
       },
       colors: {
         cream: "#FAF8F2",
