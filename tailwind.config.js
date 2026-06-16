@@ -18,6 +18,18 @@ module.exports = {
         // inside a locked 100vh pane. Keep this raw query in sync with the
         // matchMedia() string in components/HScroll.jsx.
         hpin: { raw: "(min-width: 768px) and (min-height: 700px) and (orientation: landscape)" },
+        // Landscape height breakpoints — used to COMPACT the pinned HScroll
+        // panels (Categories, Why CDT, FAQ) on laptop-height screens so their
+        // content fits inside the locked 100vh pane instead of being clipped at
+        // the bottom. Scoped to landscape so mobile portrait (which stacks and
+        // scrolls normally) keeps its full-size design.
+        // `short` is intentionally generous (≤1080px): a maximized browser on a
+        // 1920×1080 desktop only has ~920–960px of viewport height, and at that
+        // WIDTH the 3xl (≥1920px) styles scale everything UP — so 1080p screens
+        // were the worst offenders for clipping. Anything taller (1440p/4K) has
+        // the vertical room and keeps the full-size design.
+        short: { raw: "(max-height: 1080px) and (orientation: landscape)" },
+        shorter: { raw: "(max-height: 760px) and (orientation: landscape)" },
       },
       colors: {
         cream: "#FAF8F2",

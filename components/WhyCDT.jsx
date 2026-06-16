@@ -78,7 +78,7 @@ function FeatureCard({ f, i }) {
         ref={ref}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
-        className="group relative flex items-start gap-4 overflow-hidden rounded-xl border border-white/5 bg-[#181818] p-5 transition-[transform,box-shadow] duration-300 ease-out [transform-style:preserve-3d] will-change-transform hover:shadow-[0_26px_55px_-22px_rgba(0,0,0,0.85)] lg:p-6 3xl:gap-5 3xl:p-8"
+        className="group relative flex items-start gap-4 overflow-hidden rounded-xl border border-white/5 bg-[#181818] p-5 transition-[transform,box-shadow] duration-300 ease-out [transform-style:preserve-3d] will-change-transform hover:shadow-[0_26px_55px_-22px_rgba(0,0,0,0.85)] lg:p-6 3xl:gap-5 3xl:p-8 short:!p-4 short:!gap-3.5"
         style={{ borderLeft: `3px solid ${f.accent}`, transform: "rotateX(0deg) rotateY(0deg)" }}
       >
         <span
@@ -88,8 +88,8 @@ function FeatureCard({ f, i }) {
           <f.icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110 3xl:h-6 3xl:w-6" />
         </span>
         <div style={{ transform: "translateZ(18px)" }}>
-          <h3 className="font-poppins text-base font-medium leading-snug text-cream 3xl:text-xl">{f.title}</h3>
-          <p className="mt-1.5 font-poppins text-[15px] font-normal leading-snug text-muted-2 3xl:text-lg">
+          <h3 className="font-poppins text-base font-medium leading-snug text-cream 3xl:text-xl short:!text-[15px]">{f.title}</h3>
+          <p className="mt-1.5 font-poppins text-[15px] font-normal leading-snug text-muted-2 3xl:text-lg short:!mt-1 short:!text-[13px] shorter:!text-xs">
             {f.desc}
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function WhyCDT({ panel = false }) {
   return (
     <section
       id="why-cdt"
-      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 ${
+      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 short:!py-8 shorter:!py-6 ${
         panel ? "bg-transparent" : "bg-ink-3"
       }`}
     >
@@ -125,10 +125,10 @@ export default function WhyCDT({ panel = false }) {
             </p>
           </Reveal>
 
-          <div className="mt-10 grid max-w-md grid-cols-2 gap-x-6 gap-y-7 3xl:max-w-lg 3xl:gap-y-9">
+          <div className="mt-10 grid max-w-md grid-cols-2 gap-x-6 gap-y-7 3xl:max-w-lg 3xl:gap-y-9 short:!mt-6 short:!gap-y-5 shorter:!mt-4 shorter:!gap-y-4">
             {STATS.map((s, i) => (
               <Reveal key={i} from="up" delay={200 + i * 90}>
-                <div className="font-bebas text-[clamp(2rem,7vw,2.5rem)] uppercase leading-none tracking-wide text-white 3xl:text-[3.25rem]">
+                <div className="font-bebas text-[clamp(1.5rem,4.5vw,1.875rem)] uppercase leading-none tracking-wide text-white 3xl:text-[2.25rem] short:!text-[1.625rem]">
                   {s.val}
                 </div>
                 <div className="mt-1.5 font-poppins text-[10px] uppercase tracking-[0.22em] text-muted">
@@ -140,7 +140,7 @@ export default function WhyCDT({ panel = false }) {
         </div>
 
         {/* RIGHT — feature cards with 3D tilt */}
-        <div className="flex flex-col gap-4 lg:gap-[31px] 3xl:gap-9">
+        <div className="flex flex-col gap-4 lg:gap-[31px] 3xl:gap-9 short:!gap-3 shorter:!gap-2.5">
           {FEATURES.map((f, i) => (
             <FeatureCard key={i} f={f} i={i} />
           ))}

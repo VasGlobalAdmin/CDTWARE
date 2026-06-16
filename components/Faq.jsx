@@ -73,7 +73,7 @@ const line = (isOpen, i = 0) => ({
 
 function Answer({ a, isOpen }) {
   return (
-    <div className="px-5 pb-6 pr-6 sm:px-6 3xl:px-8 3xl:pb-8">
+    <div className="px-5 pb-6 pr-6 sm:px-6 3xl:px-8 3xl:pb-8 short:!pb-4">
       {a.intro &&
         (a.steps ? (
           <p className="font-poppins text-[17px] font-semibold text-[#EFEFEB] 3xl:text-xl" style={line(isOpen)}>
@@ -119,7 +119,7 @@ export default function Faq({ panel = false }) {
   return (
     <section
       id="faq"
-      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 ${
+      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 short:!py-8 shorter:!py-6 ${
         panel ? "bg-transparent" : "bg-[#080806]"
       }`}
     >
@@ -153,7 +153,7 @@ export default function Faq({ panel = false }) {
                   <button
                     onClick={() => setOpen(isOpen ? -1 : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5 3xl:px-8 3xl:py-7"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5 3xl:px-8 3xl:py-7 short:!py-3.5 shorter:!py-3"
                   >
                     <span
                       className={`font-poppins text-[15px] font-medium transition-colors duration-300 sm:text-base 3xl:text-lg ${

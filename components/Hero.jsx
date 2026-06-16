@@ -98,6 +98,10 @@ export default function Hero() {
   const [inView, setInView] = useState(true);
   const tlRef = useRef(null); // the in-flight circle-slide timeline (if any)
   const p = PRODUCTS[active];
+  // A non-numeric rating (e.g. "NEW") marks a fresh arrival: we show a stacked
+  // "New / Arrival" label instead of a star rating (and hide the stars, since
+  // there's no numeric score). The likes pill stays visible.
+  const isNew = isNaN(parseFloat(p.rating));
 
   // Two persistent circle layers cross-flown by GSAP (no remount → no decode
   // hitch). frontRef = which layer currently holds the featured product.
@@ -246,13 +250,13 @@ export default function Hero() {
     setActive(i);
   };
 
-  // "Shop Now" glides to the Get-In-Touch form. The form lives inside a pinned
-  // horizontal block, so on landscape we scroll to the point where THAT panel is
-  // centred (matching the side-rail logic); elsewhere we scroll to the form box.
+  // "Shop Now" glides down to the Reviews section. If it ever sits inside a
+  // pinned horizontal block we scroll to the point where THAT panel is centred
+  // (matching the side-rail logic); otherwise we scroll to the section top.
   const goToForm = (e) => {
     e.preventDefault();
     if (typeof document === "undefined") return;
-    const el = document.getElementById("get-in-touch");
+    const el = document.getElementById("reviews");
     if (!el) return;
     const horiz = window.matchMedia("(min-width: 768px) and (orientation: landscape)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -364,10 +368,10 @@ export default function Hero() {
         </Swap>
         <motion.a
           {...rise(0.42)}
-          href="#get-in-touch"
+          href="#reviews"
           onClick={goToForm}
-          style={{ ...abs(600, 360, 145, 48), backgroundColor: "#E22423", borderRadius: 29 }}
-          className="flex items-center justify-center font-gotham text-[18px] font-normal text-cream transition-transform hover:scale-105"
+          style={{ ...abs(600, 360, 145, 48), backgroundColor: "#E22423", borderRadius: 29, zIndex: 40 }}
+          className="flex cursor-pointer items-center justify-center font-gotham text-[18px] font-normal text-cream transition-transform hover:scale-105"
         >
           Shop Now
         </motion.a>
@@ -375,7 +379,7 @@ export default function Hero() {
         {/* ---- RIGHT CLUSTER (lamp · rating card · lion · plant) ----
             Shifted right as a group so it fills the right side of the full-bleed
             background and balances the product on the left. */}
-        <div style={{ position: "absolute", inset: 0, transform: `translateX(${view.push}px)` }}>
+        <div className="pointer-events-none" style={{ position: "absolute", inset: 0, transform: `translateX(${view.push}px)` }}>
         {/* ---- Hanging lamp (Frame 328) @(1270,-106) 74×400 ----
             Real Figma export (Group.svg); LampSvg kept as a 404 fallback. */}
         <div style={{ ...abs(1270, -20, 74, 400), zIndex: 30 }} className="animate-float">
@@ -402,11 +406,20 @@ export default function Hero() {
         <Swap
           kk={active}
           delay={0.74}
-          pos={abs(1129, 194, 200)}
-          style={{ lineHeight: "52px" }}
-          className="font-gotham text-[52px] font-black text-cream"
+          pos={abs(1129, isNew ? 196 : 194, 220)}
+          style={isNew ? undefined : { lineHeight: "52px" }}
+          className={`font-gotham text-cream ${
+            isNew ? "uppercase tracking-wide" : "whitespace-nowrap text-[52px] font-black"
+          }`}
         >
-          {p.rating}
+          {isNew ? (
+            <>
+              <span className="block text-[42px] font-semibold leading-none">New</span>
+              <span className="mt-1 block text-[22px] font-medium leading-none">Arrival</span>
+            </>
+          ) : (
+            p.rating
+          )}
         </Swap>
         {!isNaN(parseFloat(p.rating)) && (
           <motion.div {...rise(0.4)} style={abs(1131, 250, 220)} className="pointer-events-none">
@@ -558,7 +571,7 @@ export default function Hero() {
               {p.titleBold}
             </Mobile>
             <a
-              href="#get-in-touch"
+              href="#reviews"
               onClick={goToForm}
               className="mt-[clamp(1rem,4vw,1.5rem)] inline-flex h-12 items-center justify-center rounded-full bg-[#E22423] px-8 font-gotham text-[clamp(0.9rem,4vw,1.05rem)] text-cream shadow-[0_10px_24px_-6px_rgba(226,36,35,0.6)] transition-transform active:scale-95"
             >
@@ -601,10 +614,21 @@ export default function Hero() {
             <div className="flex items-center gap-3.5">
               {/* rating — number + gold stars, no disc/ring */}
               <div className="shrink-0 text-center">
-                <span className="block font-gotham text-[clamp(1.9rem,9vw,2.4rem)] font-black leading-none text-cream">
-                  {p.rating}
-                </span>
-                {!isNaN(parseFloat(p.rating)) && (
+                {isNew ? (
+                  <span className="block w-[4.5rem] font-gotham uppercase tracking-wide text-cream">
+                    <span className="block text-[clamp(1.2rem,5.5vw,1.55rem)] font-semibold leading-none">
+                      New
+                    </span>
+                    <span className="mt-0.5 block text-[clamp(0.78rem,3.4vw,0.95rem)] font-medium leading-none">
+                      Arrival
+                    </span>
+                  </span>
+                ) : (
+                  <span className="block font-gotham text-[clamp(1.9rem,9vw,2.4rem)] font-black uppercase leading-none text-cream">
+                    {p.rating}
+                  </span>
+                )}
+                {!isNew && (
                   <div className="mt-1.5 flex justify-center">
                     <StarRow value={p.rating} size={14} gap={2} />
                   </div>

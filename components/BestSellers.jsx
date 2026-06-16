@@ -80,7 +80,7 @@ function TiltCard({ s, i }) {
         style={{ transform: "rotateX(0deg) rotateY(0deg)" }}
       >
         {/* Image — lifted toward the viewer for parallax depth */}
-        <div className="relative h-52 overflow-hidden sm:h-56 lg:h-64 2xl:h-72 3xl:h-80" style={{ transform: "translateZ(45px)" }}>
+        <div className="relative h-52 overflow-hidden sm:h-56 lg:h-64 2xl:h-72 3xl:h-80 short:!h-40 shorter:!h-32" style={{ transform: "translateZ(45px)" }}>
           <img
             src={s.img}
             alt={s.name}
@@ -95,14 +95,14 @@ function TiltCard({ s, i }) {
         </div>
 
         {/* Copy — slightly lifted too */}
-        <div className="p-5 3xl:p-7" style={{ transform: "translateZ(28px)" }}>
+        <div className="p-5 3xl:p-7 short:!p-4" style={{ transform: "translateZ(28px)" }}>
           <p className="font-dm text-[11px] font-bold uppercase tracking-[0.25em] text-white/55 3xl:text-xs">
             {s.tag}
           </p>
-          <h3 className="mt-1.5 font-gotham text-xl font-bold uppercase tracking-tight text-cream sm:text-2xl 3xl:text-[1.75rem]">
+          <h3 className="mt-1.5 font-gotham text-xl font-bold uppercase tracking-tight text-cream sm:text-2xl 3xl:text-[1.75rem] short:!text-lg">
             {s.name}
           </h3>
-          <p className="mt-2 font-poppins text-sm font-light leading-relaxed text-muted/80 3xl:text-base">
+          <p className="mt-2 font-poppins text-sm font-light leading-relaxed text-muted/80 3xl:text-base short:!mt-1.5 short:!text-[13px] shorter:!text-xs">
             {s.desc}
           </p>
         </div>
@@ -118,7 +118,7 @@ export default function BestSellers({ panel = false }) {
   return (
     <section
       id="best-sellers"
-      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 ${
+      className={`relative flex min-h-screen flex-col justify-center overflow-hidden py-12 md:py-16 short:!py-8 shorter:!py-6 ${
         panel ? "bg-transparent" : "bg-ink-2"
       }`}
     >
@@ -131,7 +131,7 @@ export default function BestSellers({ panel = false }) {
           <SectionHeading top="Best" bottom="Sellers" />
         </Reveal>
 
-        <div className="mt-12 grid gap-6 2xl:gap-8 3xl:gap-10 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid gap-6 2xl:gap-8 3xl:gap-10 sm:grid-cols-2 xl:grid-cols-4 short:!mt-6 short:!gap-4 shorter:!mt-4 shorter:!gap-3">
           {SELLERS.map((s, i) => (
             <TiltCard key={i} s={s} i={i} />
           ))}
