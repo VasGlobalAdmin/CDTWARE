@@ -25,15 +25,16 @@ export const metadata = {
   title: "CDT Distribution — Your Local Wholesale Partner",
   description:
     "CDT Distribution is built for C-store owners who need the right products at the right price — delivered the next business day across South Carolina.",
-  verification: {
-    google: "mzh04VTHLIvGyFPqgI9-oX2LQkb3xHn60pvE2VYiWTs",
-  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta
+          name="google-site-verification"
+          content="mzh04VTHLIvGyFPqgI9-oX2LQkb3xHn60pvE2VYiWTs"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: "document.documentElement.classList.add('js')",
