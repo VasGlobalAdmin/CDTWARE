@@ -47,3 +47,4 @@ Inter — are loaded from Google Fonts.
 Sections fade/slide in on scroll via an IntersectionObserver (`components/Reveal.jsx`).
 This is progressive enhancement: content is fully visible without JS and respects
 `prefers-reduced-motion`.
+##
