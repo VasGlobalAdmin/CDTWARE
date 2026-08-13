@@ -22,9 +22,9 @@ const gotham = localFont({
 });
 
 export const metadata = {
-  title: "CDT Distribution — Your Local Wholesale Partner",
+  title: "Wholesale Distributor in Easley, SC | CDT Distribution",
   description:
-    "CDT Distribution is built for C-store owners who need the right products at the right price — delivered the next business day across South Carolina.",
+    "CDT Distribution — Easley, SC wholesale supplier for convenience stores & vape shops. Cigarettes, vapes, kratom & more, delivered next business day.",
 };
 
 export default function RootLayout({ children }) {

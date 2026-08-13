@@ -415,6 +415,9 @@ export default function Contact() {
 
         {/* info row */}
         <Reveal delay={120} className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:mt-7 lg:mt-9 lg:gap-x-10">
+          {/* <address> is the semantically-correct tag for NAP (name/address/phone)
+              info; display:contents keeps the flex row layout untouched. */}
+          <address className="contents not-italic">
           {INFO.map((it, i) => {
             const inner = (
               <span className="flex items-center gap-3 text-left">
@@ -434,6 +437,7 @@ export default function Contact() {
               <span key={i}>{inner}</span>
             );
           })}
+          </address>
         </Reveal>
       </div>
 

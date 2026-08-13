@@ -6,15 +6,65 @@ import Categories from "@/components/Categories";
 import BestSellers from "@/components/BestSellers";
 import WhyCDT from "@/components/WhyCDT";
 import Faq from "@/components/Faq";
+import { FAQS } from "@/lib/faqs";
 import Reviews from "@/components/Reviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import HScroll from "@/components/HScroll";
 import Glow from "@/components/Glow";
 
+const SITE_URL = "https://cdtwarehouse.com";
+
+// FAQPage schema built from the same data the visible accordion renders, so
+// the two can never drift apart.
+const faqText = (a) =>
+  [a.intro, ...(a.steps || []), a.outro].filter(Boolean).join(" ");
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: faqText(f.a) },
+  })),
+};
+
+// Local-business NAP schema — matches the visible contact info exactly.
+const BUSINESS_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WholesaleStore",
+  name: "CDT Distribution",
+  url: SITE_URL,
+  telephone: "+1-864-343-1512",
+  email: "cdt.orders@gmail.com",
+  image: `${SITE_URL}/images/cdt-logo.svg`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "3801 Calhoun Memorial Hwy",
+    addressLocality: "Easley",
+    addressRegion: "SC",
+    postalCode: "29640",
+    addressCountry: "US",
+  },
+  areaServed: [
+    "Easley", "Powdersville", "Pickens", "Liberty", "Central", "Greenville",
+    "Simpsonville", "Mauldin", "Clemson", "Anderson", "Spartanburg",
+    "Upstate South Carolina", "South Carolina",
+  ].map((name) => ({ "@type": "Place", name })),
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BUSINESS_SCHEMA) }}
+      />
       {/* No navbar — only the CDT logo, fixed top-left (per Figma placement) */}
       <Logo className="fixed left-5 top-4 z-50 animate-slideInLeft sm:left-9 sm:top-5" />
       <SideRail />

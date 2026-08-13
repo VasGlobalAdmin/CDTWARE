@@ -106,8 +106,12 @@ export default function SideRail() {
       const i = parseInt(panel.dataset.hpanel, 10) || 0;
       const n = parseInt(wrap.dataset.hscroll, 10) || 1;
       const wrapTop = wrap.getBoundingClientRect().top + window.scrollY;
+      // HScroll publishes each panel's exact offset (accounts for panels that
+      // first reveal overflowing content vertically); fall back to the linear
+      // split if it isn't there yet.
+      const off = parseFloat(panel.dataset.hoffset);
       const span = Math.max(0, wrap.offsetHeight - window.innerHeight);
-      targetY = wrapTop + (n > 1 ? (span * i) / (n - 1) : 0);
+      targetY = wrapTop + (Number.isFinite(off) ? off : n > 1 ? (span * i) / (n - 1) : 0);
     } else {
       targetY = el.getBoundingClientRect().top + window.scrollY;
     }

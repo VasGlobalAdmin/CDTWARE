@@ -4,64 +4,7 @@ import Reveal from "./Reveal";
 import { Icon } from "./Icons";
 import Glow from "./Glow";
 import SectionHeading from "./SectionHeading";
-
-const FAQS = [
-  {
-    q: "How do I start buying wholesale in South Carolina?",
-    a: {
-      intro: "Getting started with CDT Warehouse is simple:",
-      steps: [
-        "Register your Business.",
-        "Provide your resale certificate.",
-        "Submit any required tobacco or vape licenses.",
-        "Open your CDT wholesale account.",
-      ],
-      outro: "Once approved, you can begin placing bulk orders immediately.",
-    },
-  },
-  {
-    q: "Why choose CDT Warehouse as your wholesale distributor in South Carolina?",
-    a: {
-      intro: "CDT Warehouse is built for retailers and manufacturers who need:",
-      steps: [
-        "Reliable inventory and consistent supply.",
-        "Competitive wholesale pricing.",
-        "Fast delivery options.",
-        "Full compliance with South Carolina regulations.",
-      ],
-      outro:
-        "We're more than a supplier—we're your wholesale partner for long-term growth.",
-    },
-  },
-  {
-    q: "Do I need a license to buy wholesale tobacco in South Carolina?",
-    a: {
-      intro:
-        "Yes. CDT Warehouse requires all retailers purchasing tobacco products to have the proper South Carolina tobacco license. This ensures full compliance with state and federal regulations.",
-    },
-  },
-  {
-    q: "Can convenience store owners buy directly from a wholesale distributor?",
-    a: {
-      intro:
-        "Yes—retailers can buy directly from CDT Warehouse. We specialize in serving convenience stores, vape shops, and small businesses by providing direct access to wholesale products without unnecessary middlemen.",
-    },
-  },
-  {
-    q: "Do retailers pay tobacco tax when buying wholesale in South Carolina?",
-    a: {
-      intro:
-        "In most cases, tobacco taxes are handled within the supply chain, but retailers are still responsible for compliance with South Carolina tax laws. We help ensure all products are properly sourced and compliant.",
-    },
-  },
-  {
-    q: "What is a wholesale distributor and how does it work?",
-    a: {
-      intro:
-        "CDT Warehouse operates as a wholesale distributor by purchasing products in bulk from manufacturers and supplying them to retailers at discounted prices. This allows businesses to streamline purchasing, reduce costs, and maintain consistent inventory without managing multiple suppliers.",
-    },
-  },
-];
+import { FAQS } from "@/lib/faqs";
 
 // staggered reveal for each answer line, fired when the item opens
 const line = (isOpen, i = 0) => ({
@@ -73,29 +16,32 @@ const line = (isOpen, i = 0) => ({
 
 function Answer({ a, isOpen }) {
   return (
-    <div className="px-5 pb-6 pr-6 sm:px-6 3xl:px-8 3xl:pb-8 short:!pb-4">
+    <div className="px-5 pb-6 pr-6 sm:px-6 3xl:px-8 3xl:pb-8 short:!px-4 short:!pb-3.5 shorter:!pb-3">
       {a.intro &&
         (a.steps ? (
-          <p className="font-poppins text-[17px] font-semibold text-[#EFEFEB] 3xl:text-xl" style={line(isOpen)}>
+          <p
+            className="font-poppins text-[17px] font-semibold text-[#EFEFEB] 3xl:text-xl short:!text-[14px] shorter:!text-[13px]"
+            style={line(isOpen)}
+          >
             {a.intro}
           </p>
         ) : (
           <p
-            className="font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px] 3xl:text-lg"
+            className="font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px] 3xl:text-lg short:!text-[13px] short:!leading-snug shorter:!text-[12px]"
             style={line(isOpen)}
           >
             {a.intro}
           </p>
         ))}
       {a.steps && (
-        <ul className="mt-3 space-y-2.5">
+        <ul className="mt-3 space-y-2.5 short:!mt-2 short:!space-y-1.5 shorter:!space-y-1">
           {a.steps.map((s, i) => (
             <li
               key={i}
-              className="flex items-start gap-2.5 font-inter text-[15px] font-light text-[#EFEFEB]/90 sm:text-[17px] 3xl:text-lg"
+              className="flex items-start gap-2.5 font-inter text-[15px] font-light text-[#EFEFEB]/90 sm:text-[17px] 3xl:text-lg short:!text-[13px] shorter:!text-[12px]"
               style={line(isOpen, i + 1)}
             >
-              <Icon.check className="mt-1.5 h-3.5 w-3.5 flex-none text-brand" />
+              <Icon.check className="mt-1.5 h-3.5 w-3.5 flex-none text-brand short:!mt-1 short:!h-3 short:!w-3" />
               <span>{s}</span>
             </li>
           ))}
@@ -103,7 +49,7 @@ function Answer({ a, isOpen }) {
       )}
       {a.outro && (
         <p
-          className="mt-3 font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px] 3xl:text-lg"
+          className="mt-3 font-inter text-[15px] font-light leading-relaxed text-[#EFEFEB]/85 sm:text-[17px] 3xl:text-lg short:!mt-2 short:!text-[13px] short:!leading-snug shorter:!text-[12px]"
           style={line(isOpen, (a.steps?.length || 0) + 1)}
         >
           {a.outro}
@@ -153,23 +99,23 @@ export default function Faq({ panel = false }) {
                   <button
                     onClick={() => setOpen(isOpen ? -1 : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5 3xl:px-8 3xl:py-7 short:!py-3.5 shorter:!py-3"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5 3xl:px-8 3xl:py-7 short:!px-4 short:!py-2.5 shorter:!py-2"
                   >
-                    <span
-                      className={`font-poppins text-[15px] font-medium transition-colors duration-300 sm:text-base 3xl:text-lg ${
+                    <h3
+                      className={`font-poppins text-[15px] font-medium transition-colors duration-300 sm:text-base 3xl:text-lg short:!text-[13.5px] shorter:!text-[12.5px] ${
                         isOpen ? "text-cream" : "text-[#EFEFEB]"
                       }`}
                     >
                       {item.q}
-                    </span>
+                    </h3>
                     <span
-                      className={`flex h-8 w-8 flex-none items-center justify-center rounded-full border transition-all duration-300 3xl:h-10 3xl:w-10 ${
+                      className={`flex h-8 w-8 flex-none items-center justify-center rounded-full border transition-all duration-300 3xl:h-10 3xl:w-10 short:!h-6 short:!w-6 ${
                         isOpen
                           ? "rotate-45 border-brand bg-brand text-white"
                           : "border-white/15 text-cream"
                       }`}
                     >
-                      <Icon.plus className="h-4 w-4 3xl:h-5 3xl:w-5" />
+                      <Icon.plus className="h-4 w-4 3xl:h-5 3xl:w-5 short:!h-3 short:!w-3" />
                     </span>
                   </button>
                   <div

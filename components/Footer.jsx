@@ -1,13 +1,13 @@
 import Logo from "./Logo";
 
 const LINKS = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Categories", href: "#categories" },
-  { label: "Best Sellers", href: "#best-sellers" },
-  { label: "Why CDT", href: "#why-cdt" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#hero" },
+  { label: "About", href: "/#about" },
+  { label: "Categories", href: "/#categories" },
+  { label: "Best Sellers", href: "/#best-sellers" },
+  { label: "Why CDT", href: "/#why-cdt" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Footer() {
@@ -28,6 +28,10 @@ export default function Footer() {
           © {new Date().getFullYear()} CDT Distribution. All rights reserved.
         </p>
       </div>
+      <p className="container-site -mt-4 pb-8 text-center font-poppins text-xs leading-relaxed text-muted-2">
+        Wholesale distributor serving Easley, Powdersville, Pickens, Liberty, Central, Greenville,
+        Simpsonville, Mauldin, Clemson, Anderson, Spartanburg, and all of Upstate South Carolina.
+      </p>
     </footer>
   );
 }

@@ -24,9 +24,9 @@ const pctY = (px) => `${((px / H2) * 100).toFixed(4)}%`;
 const IDLE_MS = 2500; // hide the video copy after this much cursor stillness
 
 const PRODUCTS = [
-  { src: "/images/about-cable.png", alt: "Boost Plus LED dynamic display data cable" },
-  { src: "/images/about-scales.png", alt: "Boost Plus digital pocket scales" },
-  { src: "/images/about-buds.png", alt: "Boost Plus wireless earbuds" },
+  { src: "/images/about-cable.png", alt: "Mobile accessories and cables stocked at CDT Distribution's warehouse" },
+  { src: "/images/about-scales.png", alt: "Digital scales available wholesale from CDT Distribution" },
+  { src: "/images/about-buds.png", alt: "Boost Plus wireless earbuds, wholesale from CDT Distribution" },
 ];
 
 export default function About() {
@@ -191,9 +191,12 @@ export default function About() {
                 </span>
               </h2>
               <p className="mt-4 max-w-[600px] font-poppins text-[clamp(13px,3.4vw,17px)] font-light leading-relaxed text-muted opacity-0 animate-fadeUp [text-shadow:0_1px_8px_rgba(0,0,0,0.9)] [animation-delay:460ms] sm:mt-5">
-                We&apos;ve been stocking South Carolina before it was cool. Massive range, exclusive
-                deals, zero fluff — your go-to wholesale supplier for smoke essentials, disposables &amp;
-                groceries across South Carolina for 10+ years and counting.
+                CDT Distribution has supplied convenience stores, vape shops, and independent
+                retailers across Upstate South Carolina for more than a decade. From our warehouse
+                in Easley, SC, we stock smoke essentials, cigarettes, disposable vapes, kratom,
+                grocery, beverages, mobile accessories, automotive supplies, and health care
+                products — with next-business-day delivery to Powdersville, Pickens, Liberty,
+                Greenville, Anderson, Spartanburg, and beyond.
               </p>
             </div>
           </article>
@@ -203,7 +206,7 @@ export default function About() {
             {/* Landscape composition — whole scene fit into the viewport */}
             <div className="hidden h-full w-full items-center justify-center md:landscape:flex">
               <div className="relative" style={{ width: "min(100vw, 185.6667vh)", aspectRatio: `${W2} / ${H2}` }}>
-                <img data-reveal="1" src="/images/about-collage.png" alt="RawLeaf natural tobacco leaf wrap range" className="absolute object-cover" style={{ left: pctX(906), top: 0, width: pctX(765), height: "100%", zIndex: 1, ...hiddenRise }} />
+                <img data-reveal="1" src="/images/about-collage.png" alt="Inside CDT Distribution's wholesale warehouse in Easley, SC" className="absolute object-cover" style={{ left: pctX(906), top: 0, width: pctX(765), height: "100%", zIndex: 1, ...hiddenRise }} />
 
                 {/* solid headline (behind shots) */}
                 <h2 className="absolute font-gotham font-bold text-cream" style={{ ...headPos, zIndex: 10, textShadow: "0 2px 24px rgba(0,0,0,0.45)" }}>
@@ -237,7 +240,7 @@ export default function About() {
                 </div>
               </Reveal>
               <Reveal from="up" delay={220} className="w-full">
-                <img src="/images/about-collage.png" alt="RawLeaf natural tobacco leaf wrap range" className="mx-auto w-full max-w-md rounded-2xl shadow-xl shadow-black/50" />
+                <img src="/images/about-collage.png" alt="Inside CDT Distribution's wholesale warehouse in Easley, SC" className="mx-auto w-full max-w-md rounded-2xl shadow-xl shadow-black/50" />
               </Reveal>
             </div>
           </article>

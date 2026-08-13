@@ -120,8 +120,11 @@ export default function WhyCDT({ panel = false }) {
             <p className="eyebrow">Why CDT Just Hits Different</p>
             <SectionHeading top="The CDT" bottom="Advantage" />
             <p className="mt-5 max-w-md font-poppins text-sm font-light leading-6 text-muted 3xl:max-w-lg 3xl:text-base 3xl:leading-7">
-              Great wholesale prices, delivery that doesn&apos;t ghost you, and a team that picks
-              up on the first ring. Sounds too good? Come find out.
+              Based in Easley, SC, CDT Distribution knows Upstate South Carolina because we live
+              and work here. We proudly deliver next business day to convenience stores and vape
+              shops in Easley, Powdersville, Pickens, Liberty, Central, Greenville, Simpsonville,
+              Mauldin, Clemson, Anderson, and Spartanburg — with statewide delivery available
+              across South Carolina.
             </p>
           </Reveal>
 

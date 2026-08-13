@@ -16,21 +16,29 @@ const PRODUCTS = [
   {
     tag: "Cigarettes", name: "Teton", rank: "#1 Retailers' Go-To Choice",
     titleLight: "EVERYDAY", titleBold: "TETON", rating: "4.9", likes: 46, img: "/images/hero-teton.png", thumb: "/images/hero-teton-thumb.png",
+    imgAlt: "Teton cigarettes, CDT Distribution's exclusive South Carolina value brand",
+    thumbAlt: "Teton cigarettes wholesale — thumbnail",
     desc: "South Carolina's exclusive value champion. Big on savings, easy on budgets, and available only through CDT Wholesale.",
   },
   {
     tag: "Scales", name: "Boost Plus", rank: "#2 Trending in Tools & Gadgets",
     titleLight: "PRECISION", titleBold: "BOOST+", rating: "4.8", likes: 61, img: "/images/hero-scale.png", thumb: "/images/hero-scale-thumb.png",
+    imgAlt: "Boost Plus digital scale, wholesale mobile accessories",
+    thumbAlt: "Boost Plus digital scale, wholesale mobile accessories",
     desc: "Small in size. Big on accuracy. With multiple variants available, there's a Boost Plus Scale for almost every measuring need.",
   },
   {
     tag: "Mobile Accessories", name: "Boost Plus", rank: "#1 Tech Essential Collection",
     titleLight: "ESSENTIAL", titleBold: "BOOST+", rating: "4.9", likes: 38, img: "/images/hero-acc.png", thumb: "/images/hero-acc-thumb.png",
+    imgAlt: "Boost Plus wholesale mobile accessories from CDT Distribution",
+    thumbAlt: "Boost Plus mobile accessories wholesale — thumbnail",
     desc: "Chargers, cables, wireless earbuds, adapters, and more. If it powers, connects, or keeps devices running, chances are we've got it.",
   },
   {
     tag: "Cigarillos", name: "Raw Leaf", rank: "Newest Shelf Addition",
     titleLight: "JUST 89¢", titleBold: "RAW LEAF", rating: "NEW", likes: 92, img: "/images/hero-rawleaf.png", thumb: "/images/hero-rawleaf-thumb.png",
+    imgAlt: "Raw Leaf cigarillos wholesale, starting at 89¢",
+    thumbAlt: "Raw Leaf cigarillos wholesale — thumbnail",
     desc: "Raw Leaf delivers premium quality with an 89¢ pre-priced value customers love. Built for strong sell-through and even stronger margins.",
   },
 ];
@@ -267,8 +275,11 @@ export default function Hero() {
       const i = parseInt(panel.dataset.hpanel, 10) || 0;
       const n = parseInt(wrap.dataset.hscroll, 10) || 1;
       const wrapTop = wrap.getBoundingClientRect().top + window.scrollY;
+      // Prefer HScroll's published exact panel offset (accounts for panels
+      // that reveal overflowing content vertically before the sweep).
+      const off = parseFloat(panel.dataset.hoffset);
       const span = Math.max(0, wrap.offsetHeight - window.innerHeight);
-      targetY = wrapTop + (n > 1 ? (span * i) / (n - 1) : 0);
+      targetY = wrapTop + (Number.isFinite(off) ? off : n > 1 ? (span * i) / (n - 1) : 0);
     } else {
       targetY = el.getBoundingClientRect().top + window.scrollY - 20;
     }
@@ -285,6 +296,22 @@ export default function Hero() {
       style={view.height ? { height: view.height } : undefined}
       className="relative w-full overflow-hidden bg-ink lg:h-[100dvh]"
     >
+      {/* ---- SEO headline block — the page's single <h1> plus its supporting
+          lines. Screen-reader/crawler visible only, so the pixel-exact carousel
+          design stays untouched while search engines get the local headline. ---- */}
+      <div className="sr-only">
+        <h1>
+          Upstate South Carolina&apos;s Wholesale Distributor for Convenience
+          Stores &amp; Vape Shops
+        </h1>
+        <p>#1 Retailers&apos; Go-To Choice — Proudly Based in Easley, SC</p>
+        <p>
+          Serving convenience stores, vape shops, and independent retailers in
+          Easley, Powdersville, Pickens County, Greenville, and Anderson — with
+          next-business-day delivery across Upstate South Carolina.
+        </p>
+      </div>
+
       {/* ---- Full-bleed background: ONE image spanning the entire viewport
           width behind the stage, so the wall/floor reads as a single seamless
           backdrop with no letterbox strips. ---- */}
@@ -340,7 +367,7 @@ export default function Hero() {
               >
                 <img
                   src={PRODUCTS[layerProd[li]].img}
-                  alt={PRODUCTS[layerProd[li]].name}
+                  alt={PRODUCTS[layerProd[li]].imgAlt}
                   className="img-3d h-full w-full object-cover"
                   draggable={false}
                 />
@@ -518,7 +545,7 @@ export default function Hero() {
             )}
             <img
               src={p.thumb}
-              alt={p.name}
+              alt={p.thumbAlt}
               style={abs(8, 12, 134, 96)}
               className="rounded-lg object-contain transition-transform duration-500 group-hover:scale-105"
             />
@@ -598,7 +625,7 @@ export default function Hero() {
               >
                 <img
                   src={p.img}
-                  alt={p.name}
+                  alt={p.imgAlt}
                   className="img-3d h-full w-full max-w-none object-cover"
                   draggable={false}
                 />
@@ -666,7 +693,7 @@ export default function Hero() {
                     : "border-transparent opacity-70"
                 }`}
               >
-                <img src={prod.thumb} alt={prod.name} className="h-[clamp(3.5rem,16vw,4.5rem)] w-full rounded-lg object-contain" />
+                <img src={prod.thumb} alt={prod.thumbAlt} className="h-[clamp(3.5rem,16vw,4.5rem)] w-full rounded-lg object-contain" />
                 <span className="mt-1 text-center font-poppins text-[clamp(0.6rem,2.6vw,0.7rem)] text-white/50">{prod.tag}</span>
                 <span className="text-center font-poppins text-[clamp(0.78rem,3.2vw,0.88rem)] font-semibold text-white">{prod.name}</span>
               </button>

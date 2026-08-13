@@ -14,6 +14,7 @@ const SELLERS = [
     name: "Teton",
     desc: "South Carolina's exclusive value favorite. Strong demand, unbeatable pricing, and available only through CDT Wholesale.",
     img: "/images/seller-teton.png",
+    alt: "Teton cigarettes, CDT Distribution's exclusive South Carolina value brand",
     badge: "Top Seller",
   },
   {
@@ -21,6 +22,7 @@ const SELLERS = [
     name: "Boost Plus Scale",
     desc: "Multiple sizes. Reliable accuracy. One smart choice for everyday measuring needs.",
     img: "/images/seller-scale.png",
+    alt: "Boost Plus digital scale, wholesale mobile accessories",
     badge: "Popular",
   },
   {
@@ -28,6 +30,7 @@ const SELLERS = [
     name: "Boost Plus Mobile Accessories",
     desc: "From charging cables to wireless earbuds, we've got the essentials customers ask for every day.",
     img: "/images/seller-accessories.png",
+    alt: "Boost Plus wholesale mobile accessories from CDT Distribution",
     badge: "Hot",
   },
   {
@@ -35,6 +38,7 @@ const SELLERS = [
     name: "Raw Leaf",
     desc: "New. Exclusive. Just 89¢. A small price tag with big shelf appeal.",
     img: "/images/seller-rawleaf.png",
+    alt: "Raw Leaf cigarillos wholesale, starting at 89¢",
     badge: "New",
   },
 ];
@@ -83,7 +87,7 @@ function TiltCard({ s, i }) {
         <div className="relative h-52 overflow-hidden sm:h-56 lg:h-64 2xl:h-72 3xl:h-80 shortrow:!h-40 shorterrow:!h-32" style={{ transform: "translateZ(45px)" }}>
           <img
             src={s.img}
-            alt={s.name}
+            alt={s.alt}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -129,6 +133,12 @@ export default function BestSellers({ panel = false }) {
         <Reveal from="left">
           <p className="eyebrow">Top Sellers</p>
           <SectionHeading top="Best" bottom="Sellers" />
+          <p className="mt-5 w-full font-poppins text-sm font-light leading-6 text-muted 3xl:text-base 3xl:leading-7 shorter:!mt-3">
+            South Carolina&apos;s top-selling convenience store products, at wholesale pricing.
+            Teton — our exclusive value cigarette brand for SC retailers. Boost Plus — wholesale
+            mobile accessories and digital scales. Raw Leaf — wholesale cigarillos starting at
+            89¢, delivered next business day to Easley, Greenville, Anderson, and Upstate SC.
+          </p>
         </Reveal>
 
         <div className="mt-12 grid gap-6 2xl:gap-8 3xl:gap-10 sm:grid-cols-2 xl:grid-cols-4 short:!mt-6 shorter:!mt-4 shortrow:!gap-4 shorterrow:!gap-3">

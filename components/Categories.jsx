@@ -3,18 +3,17 @@ import Glow from "./Glow";
 import SectionHeading from "./SectionHeading";
 import { Icon } from "./Icons";
 
-// Clicking any category / product card sends the visitor to the online store.
-const STORE_URL = "https://cdtweb.woopsa.app/";
-
+// Each tile links to its dedicated wholesale category page (which carries the
+// full SEO copy and the "Explore …" CTA through to the online store).
 const CATS = [
-  { label: "Smoke Essential", img: "/images/categories/cat-tobacco.png", icon: Icon.leaf },
-  { label: "Cigarettes", img: "/images/categories/cat-cigarettes.png", icon: Icon.cigarette },
-  { label: "General Grocery", img: "/images/categories/cat-grocery.png", icon: Icon.cart },
-  { label: "Beverage", img: "/images/categories/cat-beverage.png", icon: Icon.cup },
-  { label: "Disposable", img: "/images/categories/cat-disposable.png", icon: Icon.vape },
-  { label: "Automotive", img: "/images/categories/cat-automotive.png", icon: Icon.car },
-  { label: "Health Care", img: "/images/categories/cat-healthcare.png", icon: Icon.heart },
-  { label: "Kratom", img: "/images/categories/cat-kratom.png", icon: Icon.sprout },
+  { label: "Smoke Essentials", slug: "smoke-essentials", img: "/images/categories/cat-tobacco.png", icon: Icon.leaf },
+  { label: "Cigarettes", slug: "cigarettes", img: "/images/categories/cat-cigarettes.png", icon: Icon.cigarette },
+  { label: "General Grocery", slug: "general-grocery", img: "/images/categories/cat-grocery.png", icon: Icon.cart },
+  { label: "Beverage", slug: "beverage", img: "/images/categories/cat-beverage.png", icon: Icon.cup },
+  { label: "Disposables & Vaping", slug: "disposables-vaping", img: "/images/categories/cat-disposable.png", icon: Icon.vape },
+  { label: "Automotive", slug: "automotive", img: "/images/categories/cat-automotive.png", icon: Icon.car },
+  { label: "Health Care", slug: "health-care", img: "/images/categories/cat-healthcare.png", icon: Icon.heart },
+  { label: "Kratom", slug: "kratom", img: "/images/categories/cat-kratom.png", icon: Icon.sprout },
 ];
 
 export default function Categories({ panel = false }) {
@@ -34,6 +33,12 @@ export default function Categories({ panel = false }) {
         <Reveal from="left" className="shrink-0">
           <p className="eyebrow">What We Carry</p>
           <SectionHeading top="Product" bottom="Categories" />
+          <p className="mt-5 w-full font-poppins text-sm font-light leading-6 text-muted 3xl:text-base 3xl:leading-7 shorter:!mt-3">
+            Everything your convenience store or vape shop needs from one Easley, SC wholesale
+            distributor — smoke essentials, cigarettes, disposables &amp; vaping, general grocery,
+            beverages, mobile accessories, cigarillos, automotive, health care, and kratom, all
+            with wholesale pricing for South Carolina retailers.
+          </p>
         </Reveal>
 
         {/* ── 4 × 2 grid of 3D flip cards. Fixed 279×236 cards (Figma), grid
@@ -47,10 +52,8 @@ export default function Categories({ panel = false }) {
           {CATS.map((c, i) => (
             <Reveal key={i} from="zoom" delay={i * 70}>
               <a
-                href={STORE_URL}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${c.label} — shop online`}
+                href={`/categories/${c.slug}`}
+                aria-label={`${c.label} — explore wholesale category`}
                 className="group block aspect-[294/238] w-full outline-none [perspective:800px]"
               >
                 <div className="relative h-full w-full transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-visible:[transform:rotateY(180deg)]">

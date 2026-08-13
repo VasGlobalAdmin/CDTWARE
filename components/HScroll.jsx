@@ -54,37 +54,84 @@ export default function HScroll({
     let raf = 0;
     const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
 
-    // Drive a subtle depth parallax per panel: the incoming panel's content
-    // lags slightly behind the slide, then settles as it centres. `tx` is how
-    // far (px) the track has been pushed left.
-    const setParallax = (tx) => {
+    // Per-panel VERTICAL overflow (px): how much taller a panel's content is
+    // than the locked 100vh pane. On laptop-height screens where a panel
+    // doesn't fit, the zig-zag first scrolls that panel's content up (so all
+    // of it is shown), THEN sweeps horizontally to the next panel — nothing
+    // is ever clipped. Measured in layout(), consumed in update().
+    let ovs = [];
+    const measure = () => {
+      const vh = window.innerHeight;
+      ovs = Array.from(track.children).map((panel) => {
+        const inner = panel.firstElementChild;
+        const h = inner ? inner.scrollHeight : panel.scrollHeight;
+        const ov = h - vh;
+        return ov > 8 ? ov : 0; // ignore sub-pixel/rounding noise
+      });
+    };
+
+    // Depth parallax + vertical reveal per panel. `tx` is how far (px) the
+    // track has been pushed left; `tys[i]` how far panel i's content has been
+    // scrolled up through its overflow.
+    const setPanelTransforms = (tx, tys) => {
       const vw = window.innerWidth;
       Array.from(track.children).forEach((panel, i) => {
         const inner = panel.firstElementChild;
         if (!inner) return;
         const off = clamp((i * vw - tx) / vw, -1, 1); // 0 when this panel is centred
-        inner.style.transform = `translate3d(${(off * 7).toFixed(2)}%,0,0)`;
+        const ty = tys ? tys[i] || 0 : 0;
+        inner.style.transform = `translate3d(${(off * 7).toFixed(2)}%,${(-ty).toFixed(1)}px,0)`;
         inner.style.opacity = (1 - Math.min(Math.abs(off), 1) * 0.25).toFixed(3);
       });
     };
 
     const layout = () => {
       const vh = window.innerHeight;
-      const maxX = Math.max(0, track.scrollWidth - window.innerWidth);
-      wrap.style.height = `${vh + maxX}px`;
+      const vw = window.innerWidth;
+      measure();
+      const maxX = Math.max(0, track.scrollWidth - vw);
+      const sumOv = ovs.reduce((a, b) => a + b, 0);
+      // The pinned span now covers the horizontal sweep PLUS every panel's
+      // vertical reveal, so the page keeps scrolling until everything showed.
+      wrap.style.height = `${vh + maxX + sumOv}px`;
+      // Publish each panel's exact offset (px from the wrap top at which that
+      // panel arrives centred, before its own vertical reveal) so the side
+      // rail / anchor navigation can jump to the right scroll position.
+      let acc = 0;
+      Array.from(track.children).forEach((panel, i) => {
+        if (i) acc += vw;
+        panel.dataset.hoffset = Math.round(acc);
+        acc += ovs[i] || 0;
+      });
     };
 
     const update = () => {
       raf = 0;
       const vh = window.innerHeight;
+      const vw = window.innerWidth;
       const total = wrap.offsetHeight - vh;
       const top = wrap.getBoundingClientRect().top;
-      const progress = total > 0 ? clamp(-top / total, 0, 1) : 0;
-      const maxX = track.scrollWidth - window.innerWidth;
-      const tx = maxX * progress;
+      const p = clamp(-top, 0, Math.max(0, total));
+      // Walk the zig-zag segments in order: reveal panel 0's overflow ↓,
+      // sweep → into panel 1, reveal its overflow ↓, sweep →, and so on.
+      const n = track.children.length;
+      let rem = p;
+      let tx = 0;
+      const tys = new Array(n).fill(0);
+      for (let i = 0; i < n; i++) {
+        const dv = Math.min(rem, ovs[i] || 0);
+        tys[i] = dv;
+        rem -= dv;
+        if (i < n - 1) {
+          const dh = Math.min(rem, vw);
+          tx += dh;
+          rem -= dh;
+        }
+      }
       track.style.transform = `translate3d(${(-tx).toFixed(2)}px,0,0)`;
-      if (barRef.current) barRef.current.style.transform = `scaleX(${progress.toFixed(4)})`;
-      setParallax(tx);
+      if (barRef.current)
+        barRef.current.style.transform = `scaleX(${(total > 0 ? p / total : 0).toFixed(4)})`;
+      setPanelTransforms(tx, tys);
     };
 
     const stack = () => {
@@ -109,10 +156,22 @@ export default function HScroll({
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", apply);
     horizMQ.addEventListener?.("change", apply);
+    // Panel content can change height while pinned (e.g. an FAQ answer opening)
+    // — re-measure so the reveal span always matches the real content height.
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(apply) : null;
+    if (ro)
+      Array.from(track.children).forEach((panel) => {
+        // Observe the SECTION inside the 100vh inner wrapper — the wrapper's
+        // own box never changes size, the section's content-driven height does.
+        const inner = panel.firstElementChild;
+        const target = inner?.firstElementChild || inner;
+        if (target) ro.observe(target);
+      });
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", apply);
       horizMQ.removeEventListener?.("change", apply);
+      ro?.disconnect();
       cancelAnimationFrame(raf);
     };
   }, []);
