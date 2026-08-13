@@ -382,15 +382,15 @@ export default function Hero() {
         {/* ---- end left cluster ---- */}
 
         {/* ---- Heading (Frame 37) — content swaps with the active item ---- */}
-        <Swap kk={active} delay={0.5} pos={abs(600, 171, 460)} style={{ color: CREAM, lineHeight: "18px" }} className="font-gotham text-[18px] font-medium">
+        <Swap as="p" kk={active} delay={0.5} pos={abs(600, 171, 460)} style={{ color: CREAM, lineHeight: "18px" }} className="font-gotham text-[18px] font-medium">
           {p.rank}
         </Swap>
         {/* top title line glides in from the RIGHT (right → left) — Figma: Gotham 275/70, #FAF8F2 */}
-        <Swap kk={active} delay={0.58} slide="rtl" pos={abs(600, 204, 460)} style={{ color: CREAM, fontWeight: 300, lineHeight: "67px" }} className="whitespace-nowrap font-gotham text-[70px]">
+        <Swap as="p" kk={active} delay={0.58} slide="rtl" pos={abs(600, 204, 460)} style={{ color: CREAM, fontWeight: 300, lineHeight: "67px" }} className="whitespace-nowrap font-gotham text-[70px]">
           {p.titleLight}
         </Swap>
         {/* bottom title line glides in from the LEFT (left → right) — Figma: Gotham 700/80, #FAF8F2 */}
-        <Swap kk={active} delay={0.66} slide="ltr" pos={abs(600, 273, 460)} style={{ color: CREAM, fontWeight: 700, lineHeight: "80px" }} className="whitespace-nowrap font-gotham text-[80px]">
+        <Swap as="p" kk={active} delay={0.66} slide="ltr" pos={abs(600, 273, 460)} style={{ color: CREAM, fontWeight: 700, lineHeight: "80px" }} className="whitespace-nowrap font-gotham text-[80px]">
           {p.titleBold}
         </Swap>
         <motion.a
@@ -431,6 +431,7 @@ export default function Hero() {
         </motion.div>
         {/* ---- Rating — clean number + gold stars, no disc/ring ---- */}
         <Swap
+          as="p"
           kk={active}
           delay={0.74}
           pos={abs(1129, isNew ? 196 : 194, 220)}
@@ -453,10 +454,10 @@ export default function Hero() {
             <StarRow value={p.rating} size={20} gap={3} />
           </motion.div>
         )}
-        <Swap kk={active} delay={0.82} pos={abs(1129, 358, 248)} style={{ lineHeight: "30px" }} className="font-gotham text-[30px] font-medium text-white">
+        <Swap as="p" kk={active} delay={0.82} pos={abs(1129, 358, 248)} style={{ lineHeight: "30px" }} className="font-gotham text-[30px] font-medium text-white">
           {p.name}
         </Swap>
-        <Swap kk={active} delay={0.9} pos={abs(1129, 400, 248)} style={{ color: "#E9E6E6", lineHeight: "24px" }} className="font-poppins text-[16px] font-light">
+        <Swap as="p" kk={active} delay={0.9} pos={abs(1129, 400, 248)} style={{ color: "#E9E6E6", lineHeight: "24px" }} className="font-poppins text-[16px] font-light">
           {p.desc}
         </Swap>
         {/* likes pill — sits right under the stars (above the name) @(1129,305) 109×35 */}
@@ -588,13 +589,13 @@ export default function Hero() {
           <div className="flex flex-col items-center gap-[clamp(1.75rem,6vw,2.5rem)] sm:flex-row sm:gap-8 md:gap-10">
           {/* headline */}
           <div className="relative w-full text-center sm:flex-1 sm:text-left">
-            <Mobile kk={active} className="font-gotham text-[clamp(0.72rem,3.2vw,0.95rem)] font-medium tracking-wide text-cream/80">
+            <Mobile as="p" kk={active} className="font-gotham text-[clamp(0.72rem,3.2vw,0.95rem)] font-medium tracking-wide text-cream/80">
               {p.rank}
             </Mobile>
-            <Mobile kk={active} className="mt-1.5 font-gotham text-[clamp(1.4rem,7vw,2.4rem)] font-light leading-none text-cream">
+            <Mobile as="p" kk={active} className="mt-1.5 font-gotham text-[clamp(1.4rem,7vw,2.4rem)] font-light leading-none text-cream">
               {p.titleLight}
             </Mobile>
-            <Mobile kk={active} className="mt-0.5 font-gotham text-[clamp(2rem,11vw,3.5rem)] font-bold leading-[1.05] text-cream">
+            <Mobile as="p" kk={active} className="mt-0.5 font-gotham text-[clamp(2rem,11vw,3.5rem)] font-bold leading-[1.05] text-cream">
               {p.titleBold}
             </Mobile>
             <a
@@ -662,7 +663,7 @@ export default function Hero() {
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <Mobile kk={active} className="font-gotham text-[clamp(1.1rem,5vw,1.45rem)] font-medium leading-tight text-white">
+                <Mobile as="p" kk={active} className="font-gotham text-[clamp(1.1rem,5vw,1.45rem)] font-medium leading-tight text-white">
                   {p.name}
                 </Mobile>
                 <div className="mt-2 flex items-center gap-2.5">
@@ -675,7 +676,7 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-            <Mobile kk={active} className="mt-3.5 font-poppins text-[clamp(0.8rem,3.4vw,0.92rem)] font-light leading-relaxed text-[#E9E6E6]">
+            <Mobile as="p" kk={active} className="mt-3.5 font-poppins text-[clamp(0.8rem,3.4vw,0.92rem)] font-light leading-relaxed text-[#E9E6E6]">
               {p.desc}
             </Mobile>
           </div>
@@ -734,10 +735,13 @@ function StarRow({ value, size = 18, gap = 3 }) {
 }
 
 // Flow-positioned text swap for the mobile layout (no absolute positioning).
-function Mobile({ kk, className, children }) {
+// `as` picks the rendered tag (default <div>; pass "p" for text content so the
+// markup is semantic per the SEO tag reference) — styling is unaffected.
+function Mobile({ kk, as = "div", className, children }) {
+  const M = motion[as] || motion.div;
   return (
     <AnimatePresence mode="wait">
-      <motion.div
+      <M
         key={kk}
         className={className}
         initial={{ opacity: 0, y: 10 }}
@@ -746,7 +750,7 @@ function Mobile({ kk, className, children }) {
         transition={{ duration: 0.32 }}
       >
         {children}
-      </motion.div>
+      </M>
     </AnimatePresence>
   );
 }
@@ -754,7 +758,7 @@ function Mobile({ kk, className, children }) {
 // Absolutely-positioned text that does a 3D flip when `kk` changes.
 // `delay` staggers the flip-IN so the title cascades after the dish arrives;
 // the flip-OUT stays quick so the old text clears first (master-timeline feel).
-function Swap({ kk, pos, style, className, children, delay = 0, slide }) {
+function Swap({ kk, pos, style, className, children, delay = 0, slide, as = "div" }) {
   // Default: 3D slot-machine flip on the X axis.
   // slide="rtl": the line glides IN from the right (right → left).
   // slide="ltr": the line glides IN from the left  (left → right).
@@ -776,10 +780,13 @@ function Swap({ kk, pos, style, className, children, delay = 0, slide }) {
       exit: { rotateX: 90, opacity: 0, transition: { duration: 0.35, ease: "easeIn" } },
     };
   }
+  // `as` picks the rendered tag (default <div>; pass "p" for text content so
+  // the markup is semantic per the SEO tag reference) — styling is unaffected.
+  const M = motion[as] || motion.div;
   return (
     <div style={{ ...pos, perspective: slide ? undefined : 800 }} className="pointer-events-none">
       <AnimatePresence mode="wait">
-        <motion.div
+        <M
           key={kk}
           style={{ ...style, transformOrigin: "center", backfaceVisibility: "hidden" }}
           className={className}
@@ -788,7 +795,7 @@ function Swap({ kk, pos, style, className, children, delay = 0, slide }) {
           exit={variant.exit}
         >
           {children}
-        </motion.div>
+        </M>
       </AnimatePresence>
     </div>
   );

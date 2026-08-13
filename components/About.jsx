@@ -154,6 +154,7 @@ export default function About() {
             <video
               className="absolute inset-0 h-full w-full object-cover"
               src="/videos/about.mp4"
+              aria-label="Walkthrough inside CDT Distribution's wholesale warehouse in Easley, SC"
               autoPlay
               muted
               loop

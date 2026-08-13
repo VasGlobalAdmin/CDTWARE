@@ -102,7 +102,7 @@ export default function Preloader() {
               {/* pulsing crest */}
               <motion.img
                 src="/images/cdt-logo.svg"
-                alt="CDT Distribution"
+                alt="CDT Distribution logo — wholesale distributor in Easley, South Carolina"
                 className="h-12 w-auto drop-shadow-[0_4px_16px_rgba(226,30,36,0.55)]"
                 animate={{ scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
