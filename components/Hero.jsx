@@ -296,14 +296,11 @@ export default function Hero() {
       style={view.height ? { height: view.height } : undefined}
       className="relative w-full overflow-hidden bg-ink lg:h-[100dvh]"
     >
-      {/* ---- SEO headline block — the page's single <h1> plus its supporting
-          lines. Screen-reader/crawler visible only, so the pixel-exact carousel
-          design stays untouched while search engines get the local headline. ---- */}
+      {/* ---- SEO supporting lines (sub-headline + service area) — screen-
+          reader/crawler visible only. The page's single <h1> is the VISIBLE
+          big title below (desktop + mobile), which carries the SEO headline
+          as a hidden lead-in span. ---- */}
       <div className="sr-only">
-        <h1>
-          Upstate South Carolina&apos;s Wholesale Distributor for Convenience
-          Stores &amp; Vape Shops
-        </h1>
         <p>#1 Retailers&apos; Go-To Choice — Proudly Based in Easley, SC</p>
         <p>
           Serving convenience stores, vape shops, and independent retailers in
@@ -385,14 +382,25 @@ export default function Hero() {
         <Swap as="p" kk={active} delay={0.5} pos={abs(600, 171, 460)} style={{ color: CREAM, lineHeight: "18px" }} className="font-gotham text-[18px] font-medium">
           {p.rank}
         </Swap>
-        {/* top title line glides in from the RIGHT (right → left) — Figma: Gotham 275/70, #FAF8F2 */}
-        <Swap as="p" kk={active} delay={0.58} slide="rtl" pos={abs(600, 204, 460)} style={{ color: CREAM, fontWeight: 300, lineHeight: "67px" }} className="whitespace-nowrap font-gotham text-[70px]">
-          {p.titleLight}
-        </Swap>
-        {/* bottom title line glides in from the LEFT (left → right) — Figma: Gotham 700/80, #FAF8F2 */}
-        <Swap as="p" kk={active} delay={0.66} slide="ltr" pos={abs(600, 273, 460)} style={{ color: CREAM, fontWeight: 700, lineHeight: "80px" }} className="whitespace-nowrap font-gotham text-[80px]">
-          {p.titleBold}
-        </Swap>
+        {/* The big two-line title IS the page's <h1>. display:contents keeps the
+            h1 box out of layout (its lines stay absolutely positioned, pixel-
+            identical); the sr-only span leads with the SEO headline so the one
+            h1 reads "Upstate South Carolina's Wholesale Distributor … EVERYDAY
+            TETON" to crawlers while the design shows only the carousel title. */}
+        <h1 style={{ display: "contents" }}>
+          <span className="sr-only">
+            Upstate South Carolina&apos;s Wholesale Distributor for Convenience
+            Stores &amp; Vape Shops —{" "}
+          </span>
+          {/* top title line glides in from the RIGHT (right → left) — Figma: Gotham 275/70, #FAF8F2 */}
+          <Swap as="span" kk={active} delay={0.58} slide="rtl" pos={abs(600, 204, 460)} style={{ color: CREAM, fontWeight: 300, lineHeight: "67px" }} className="whitespace-nowrap font-gotham text-[70px]">
+            {p.titleLight}
+          </Swap>
+          {/* bottom title line glides in from the LEFT (left → right) — Figma: Gotham 700/80, #FAF8F2 */}
+          <Swap as="span" kk={active} delay={0.66} slide="ltr" pos={abs(600, 273, 460)} style={{ color: CREAM, fontWeight: 700, lineHeight: "80px" }} className="whitespace-nowrap font-gotham text-[80px]">
+            {p.titleBold}
+          </Swap>
+        </h1>
         <motion.a
           {...rise(0.42)}
           href="#reviews"
@@ -592,12 +600,21 @@ export default function Hero() {
             <Mobile as="p" kk={active} className="font-gotham text-[clamp(0.72rem,3.2vw,0.95rem)] font-medium tracking-wide text-cream/80">
               {p.rank}
             </Mobile>
-            <Mobile as="p" kk={active} className="mt-1.5 font-gotham text-[clamp(1.4rem,7vw,2.4rem)] font-light leading-none text-cream">
-              {p.titleLight}
-            </Mobile>
-            <Mobile as="p" kk={active} className="mt-0.5 font-gotham text-[clamp(2rem,11vw,3.5rem)] font-bold leading-[1.05] text-cream">
-              {p.titleBold}
-            </Mobile>
+            {/* Mobile counterpart of the visible <h1> (the two layouts are
+                viewport-exclusive, so only one h1 renders at a time). Same
+                sr-only SEO lead-in; display:contents keeps flow identical. */}
+            <h1 style={{ display: "contents" }}>
+              <span className="sr-only">
+                Upstate South Carolina&apos;s Wholesale Distributor for
+                Convenience Stores &amp; Vape Shops —{" "}
+              </span>
+              <Mobile as="span" kk={active} className="mt-1.5 font-gotham text-[clamp(1.4rem,7vw,2.4rem)] font-light leading-none text-cream">
+                {p.titleLight}
+              </Mobile>
+              <Mobile as="span" kk={active} className="mt-0.5 font-gotham text-[clamp(2rem,11vw,3.5rem)] font-bold leading-[1.05] text-cream">
+                {p.titleBold}
+              </Mobile>
+            </h1>
             <a
               href="#reviews"
               onClick={goToForm}
@@ -735,8 +752,9 @@ function StarRow({ value, size = 18, gap = 3 }) {
 }
 
 // Flow-positioned text swap for the mobile layout (no absolute positioning).
-// `as` picks the rendered tag (default <div>; pass "p" for text content so the
-// markup is semantic per the SEO tag reference) — styling is unaffected.
+// `as` picks the rendered tag (default <div>; "p" for standalone text, "span"
+// when the line sits INSIDE a heading tag — only phrasing content is valid
+// there). Spans get display:block so margins/animation behave identically.
 function Mobile({ kk, as = "div", className, children }) {
   const M = motion[as] || motion.div;
   return (
@@ -744,6 +762,7 @@ function Mobile({ kk, as = "div", className, children }) {
       <M
         key={kk}
         className={className}
+        style={as === "span" ? { display: "block" } : undefined}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
@@ -780,15 +799,22 @@ function Swap({ kk, pos, style, className, children, delay = 0, slide, as = "div
       exit: { rotateX: 90, opacity: 0, transition: { duration: 0.35, ease: "easeIn" } },
     };
   }
-  // `as` picks the rendered tag (default <div>; pass "p" for text content so
-  // the markup is semantic per the SEO tag reference) — styling is unaffected.
+  // `as` picks the rendered tag (default <div>; "p" for standalone text, "span"
+  // when the line sits INSIDE a heading tag — only phrasing content is valid
+  // there). Spans get display:block so transforms/animation behave identically.
   const M = motion[as] || motion.div;
+  const Outer = as === "span" ? "span" : "div";
   return (
-    <div style={{ ...pos, perspective: slide ? undefined : 800 }} className="pointer-events-none">
+    <Outer style={{ ...pos, perspective: slide ? undefined : 800 }} className="pointer-events-none">
       <AnimatePresence mode="wait">
         <M
           key={kk}
-          style={{ ...style, transformOrigin: "center", backfaceVisibility: "hidden" }}
+          style={{
+            ...style,
+            display: as === "span" ? "block" : undefined,
+            transformOrigin: "center",
+            backfaceVisibility: "hidden",
+          }}
           className={className}
           initial={variant.initial}
           animate={variant.animate}
@@ -797,7 +823,7 @@ function Swap({ kk, pos, style, className, children, delay = 0, slide, as = "div
           {children}
         </M>
       </AnimatePresence>
-    </div>
+    </Outer>
   );
 }
 
