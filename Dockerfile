@@ -1,30 +1,24 @@
-# Stage 1: Install dependencies                      
-FROM node:20-alpine AS deps                          
-WORKDIR /app                                         
-COPY package.json package-lock.json ./               
-RUN npm ci                                           
+# ---- Build stage ----
+FROM node:20-alpine AS build
+WORKDIR /app
 
-# Stage 2: Build the application                     
-FROM node:20-alpine AS builder                       
-WORKDIR /app                                         
-COPY --from=deps /app/node_modules ./node_modules    
-COPY . .                                             
-RUN npm run build                                    
+# Install dependencies first (layer caching)
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Stage 3: Production runner                         
-FROM node:20-alpine AS runner                        
-WORKDIR /app                                         
-ENV NODE_ENV=production                              
-# Force Next.js to listen on all interfaces          
-ENV HOSTNAME="0.0.0.0"                               
-ENV PORT=3000                                        
+# Build the Next.js static export
+COPY . .
+RUN npm run build
 
-COPY --from=builder /app/public ./public             
-COPY --from=builder /app/.next ./.next               
-COPY --from=builder /app/node_modules ./node_modules 
-COPY --from=builder /app/package.json ./package.json 
+# ---- Runtime stage ----
+FROM nginx:1.27-alpine
 
-EXPOSE 3000                                          
+# Copy the built static export (Next.js output: export → out/)
+COPY --from=build /app/out /usr/share/nginx/html
 
-# Use npx directly to bypass any npm script issues   
-CMD ["npx", "next", "start"]
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
