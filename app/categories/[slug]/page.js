@@ -17,7 +17,11 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const cat = getCategory(params.slug);
   if (!cat) return {};
-  return { title: cat.title, description: cat.meta };
+  return {
+    title: cat.title,
+    description: cat.meta,
+    alternates: { canonical: `/categories/${cat.slug}` },
+  };
 }
 
 export default function CategoryPage({ params }) {
